@@ -1,9 +1,10 @@
 # Changelog
 
-## v1.0.14 (candidate)
+## v1.0.14
 
 - Restored the selected-conversation highlight in the left sidebar by matching the actual empty `data-active` attribute.
 - Added a dedicated sidebar-selection token that is darker than the hover surface.
+- Added the same subtle 3.5% SVG turbulence grain used by the Arcaia options panel across the themed ChatGPT surface.
 
 ## v1.0.13
 
