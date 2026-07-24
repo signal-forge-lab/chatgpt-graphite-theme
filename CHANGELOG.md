@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.0.15 (candidate)
+## v1.0.15
 
 - Strengthened the graphite grain to match the visible texture of the Standard Graphite design guide.
 

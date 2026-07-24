@@ -7,8 +7,8 @@
 The current baseline is:
 
 ```text
-ChatGPT Soft Graphite v1.0.13
-tag: v1.0.13
+ChatGPT Soft Graphite v1.0.15
+tag: v1.0.15
 ```
 
 ## Dual-style work
@@ -22,7 +22,7 @@ feature/dual-graphite-palettes
 Recommended sequence:
 
 1. Split the stable CSS into metadata, palettes, and shared core.
-2. Keep the generated Soft Graphite result visually equivalent to v1.0.13.
+2. Keep the generated Soft Graphite result visually equivalent to v1.0.15.
 3. Add the Graphite palette without changing shared geometry or selectors.
 4. Test Home, Chat, Project, Work, menus, dialogs, GPT discovery, code blocks,
    scrolling, hover, and focus-visible in both ChatGPT appearance modes.
@@ -46,7 +46,7 @@ For an urgent stable fix:
 git switch main
 # apply and verify the fix
 git commit -am "fix ..."
-git tag -a v1.0.14 -m "ChatGPT Soft Graphite v1.0.14"
+git tag -a v1.0.16 -m "ChatGPT Soft Graphite v1.0.16"
 git switch feature/dual-graphite-palettes
 git merge main
 ```
