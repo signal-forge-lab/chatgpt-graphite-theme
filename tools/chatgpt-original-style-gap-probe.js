@@ -1,10 +1,10 @@
 (() => {
   'use strict';
 
-  const GAP_VERSION = '0.1.0';
+  const GAP_VERSION = '1.0.0';
   const BASE_KEY = '__chatgptOriginalStyleProbe';
-  const GAP_KEY = '__chatgptOriginalStyleGapProbe';
-  const ROOT_ATTRIBUTE = 'data-chatgpt-original-style-gap-probe';
+  const GAP_KEY = '__chatgptOriginalStyleIntegratedProbe';
+  const ROOT_ATTRIBUTE = 'data-chatgpt-original-style-integrated-probe';
   const BASE_ROOT_ATTRIBUTE = 'data-chatgpt-original-style-probe';
 
   if (window[GAP_KEY]?.destroy) {
@@ -13,11 +13,8 @@
 
   const base = window[BASE_KEY];
   if (!base?.capture || !base?.exportPayload || !base?.state) {
-    const message = [
-      'Original Style Gap Probe requires the base probe first.',
-      'Run chatgpt-original-style-probe v0.1.1, then run this snippet.',
-    ].join('\n');
-    console.error(`[Original Style Gap Probe] ${message}`);
+    const message = 'Integrated probe engine initialization failed.';
+    console.error(`[Original Style Integrated Probe] ${message}`);
     window.alert(message);
     return;
   }
@@ -60,6 +57,11 @@
     hoveredElement: null,
     hoverTimer: null,
     observer: null,
+    scanTimer: null,
+    periodicTimer: null,
+    postActionTimers: new Set(),
+    semanticSignatures: new Set(),
+    maxSemanticCaptures: 220,
     panel: null,
     status: null,
     checklist: null,
@@ -300,7 +302,7 @@
     findSegmentedControl();
     findModelTrigger();
     scanOverlays();
-    renderStatus(`Visible-gap scan complete: ${state.capturedKeys.size}/${EXPECTED_KEYS.length}.`);
+    renderStatus(`Scan complete: known ${state.capturedKeys.size}/${EXPECTED_KEYS.length}, semantic ${state.semanticSignatures.size}.`);
     return coverage();
   }
 
@@ -314,13 +316,25 @@
       return { key: 'sidebar-row-hover', element: sidebarRow };
     }
 
-    const listbox = element.closest('[role="listbox"], [data-radix-select-content]');
-    const option = element.closest('[role="option"]');
-    if (listbox && option) return { key: 'model-option-hover', element: option };
+    const optionLike = element.closest(
+      '[role="option"], [role="menuitemradio"], [role="menuitem"], [data-radix-collection-item]',
+    );
+    const optionOverlay = optionLike?.closest(
+      '[role="listbox"], [role="menu"], [data-radix-select-content], [data-radix-menu-content]',
+    );
+    const openModelTrigger = firstVisible([
+      '#page-header button[aria-haspopup="listbox"][aria-expanded="true"]',
+      '#page-header button[aria-haspopup="menu"][aria-expanded="true"]',
+      'header button[aria-haspopup="listbox"][aria-expanded="true"]',
+      'header button[aria-haspopup="menu"][aria-expanded="true"]',
+    ]);
+    if (optionOverlay && optionLike && openModelTrigger) {
+      return { key: 'model-option-hover', element: optionLike };
+    }
 
     const menu = element.closest('[role="menu"], [data-radix-menu-content]');
     const menuItem = element.closest(
-      '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]',
+      '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"], [data-radix-collection-item]',
     );
     if (menu && menuItem) return { key: 'menu-item-hover', element: menuItem };
 
@@ -342,6 +356,180 @@
     return null;
   }
 
+  function stateSignature(element) {
+    const states = [];
+    const attributes = [
+      ['aria-expanded', 'expanded'],
+      ['aria-selected', 'selected'],
+      ['aria-checked', 'checked'],
+      ['aria-current', 'current'],
+      ['aria-pressed', 'pressed'],
+      ['data-state', 'state'],
+      ['data-highlighted', 'highlighted'],
+      ['data-active', 'active'],
+    ];
+    for (const [name, label] of attributes) {
+      if (!element.hasAttribute(name)) continue;
+      const value = element.getAttribute(name);
+      states.push(`${label}=${value === '' ? 'present' : value}`);
+    }
+    try {
+      if (element.matches(':hover')) states.push('hover');
+      if (element.matches(':focus')) states.push('focus');
+      if (element.matches(':focus-visible')) states.push('focus-visible');
+      if (element.matches(':active')) states.push('active-pseudo');
+      if (element.matches(':disabled')) states.push('disabled');
+    } catch {
+      // Pseudo-class matching is best-effort.
+    }
+    return states.length ? states.join('+') : 'idle';
+  }
+
+  function semanticKind(element) {
+    if (!isElement(element)) return null;
+    if (element.matches('#prompt-textarea, [contenteditable="true"]')) return 'editor';
+    if (element.matches('form.group\\/composer, form:has(#prompt-textarea)')) return 'composer';
+    if (element.matches('#stage-slideover-sidebar')) return 'sidebar';
+    if (element.matches('#page-header')) return 'page-header';
+    if (element.matches('pre, #code-block-viewer')) return 'code';
+    const role = element.getAttribute('role');
+    if (role) return `role-${role}`;
+    if (element.matches('button')) return 'button';
+    if (element.matches('a')) return 'link';
+    if (element.matches('input')) return `input-${element.getAttribute('type') || 'text'}`;
+    if (element.matches('textarea')) return 'textarea';
+    if (element.hasAttribute('aria-haspopup')) return 'popup-trigger';
+    if (element.hasAttribute('data-state')) return 'stateful';
+    return null;
+  }
+
+  function semanticClassSignature(element) {
+    return [...element.classList]
+      .filter((name) => !/^(css-|[a-z0-9]{8,}$)/i.test(name))
+      .slice(0, 4)
+      .join('.');
+  }
+
+  function captureSemantic(element, reason = 'visible') {
+    if (
+      !visible(element) ||
+      state.semanticSignatures.size >= state.maxSemanticCaptures
+    ) {
+      return false;
+    }
+    const kind = semanticKind(element);
+    if (!kind) return false;
+    const signature = [
+      kind,
+      element.tagName.toLowerCase(),
+      semanticClassSignature(element),
+      stateSignature(element),
+    ].join('|');
+    if (state.semanticSignatures.has(signature)) return false;
+    state.semanticSignatures.add(signature);
+    base.capture(
+      element,
+      `integrated:${reason}:${kind}:${stateSignature(element)}:${state.semanticSignatures.size}`,
+    );
+    renderChecklist();
+    return true;
+  }
+
+  function scanSemanticVisible() {
+    const selectors = [
+      '#stage-slideover-sidebar',
+      '#stage-slideover-sidebar a[data-sidebar-item="true"]',
+      '#page-header',
+      '#page-header aside',
+      'form.group\\/composer',
+      'form:has(#prompt-textarea)',
+      '#prompt-textarea',
+      '[contenteditable="true"]',
+      'pre',
+      '#code-block-viewer',
+      '[role="menu"]',
+      '[role="listbox"]',
+      '[role="dialog"]',
+      '[role="tooltip"]',
+      '[role="menuitem"]',
+      '[role="menuitemradio"]',
+      '[role="menuitemcheckbox"]',
+      '[role="option"]',
+      '[role="tab"]',
+      '[role="radio"]',
+      '[role="switch"]',
+      '[role="checkbox"]',
+      '[role="button"]',
+      '[aria-haspopup]',
+      '[aria-expanded]',
+      '[aria-selected]',
+      '[aria-checked]',
+      '[aria-pressed]',
+      '[data-state]',
+      '[data-highlighted]',
+      'button',
+    ];
+    let inspected = 0;
+    for (const selector of selectors) {
+      for (const element of allVisible(selector)) {
+        captureSemantic(element, 'visible');
+        inspected += 1;
+        if (inspected >= 500 || state.semanticSignatures.size >= state.maxSemanticCaptures) {
+          return;
+        }
+      }
+    }
+  }
+
+  function scheduleFullScan(delay = 80) {
+    clearTimeout(state.scanTimer);
+    state.scanTimer = window.setTimeout(() => {
+      if (!state.watching) return;
+      scanVisibleGaps();
+      scanSemanticVisible();
+    }, delay);
+  }
+
+  function schedulePostActionScans() {
+    for (const delay of [0, 60, 220, 700]) {
+      const timer = window.setTimeout(() => {
+        state.postActionTimers.delete(timer);
+        if (state.watching) {
+          scanVisibleGaps();
+          scanSemanticVisible();
+        }
+      }, delay);
+      state.postActionTimers.add(timer);
+    }
+  }
+
+  function interactiveTarget(element) {
+    return element?.closest?.(
+      'button, a, input, textarea, select, [contenteditable="true"], [role="button"], [role="option"], [role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"], [role="tab"], [role="radio"], [role="switch"], [role="checkbox"], [aria-haspopup]',
+    ) || null;
+  }
+
+  function onPointerDown(event) {
+    if (!state.watching || isProbeElement(event.target)) return;
+    const target = interactiveTarget(event.target);
+    if (target) captureSemantic(target, 'pointerdown');
+    schedulePostActionScans();
+  }
+
+  function onClick(event) {
+    if (!state.watching || isProbeElement(event.target)) return;
+    const target = interactiveTarget(event.target);
+    if (target) captureSemantic(target, 'click');
+    schedulePostActionScans();
+  }
+
+  function onKeyInteraction(event) {
+    if (!state.watching || isProbeElement(event.target)) return;
+    const target = interactiveTarget(document.activeElement) || document.activeElement;
+    if (isElement(target)) captureSemantic(target, `key-${event.key}`);
+    schedulePostActionScans();
+  }
+
   function onPointerMove(event) {
     if (!state.watching || isProbeElement(event.target)) return;
     state.hoveredElement = event.target;
@@ -349,7 +537,9 @@
     state.hoverTimer = window.setTimeout(() => {
       const target = classifyInteractive(state.hoveredElement);
       if (target) capture(target.key, target.element, 'auto-hover');
-    }, 220);
+      const genericTarget = interactiveTarget(state.hoveredElement) || state.hoveredElement;
+      if (isElement(genericTarget)) captureSemantic(genericTarget, 'hover');
+    }, 180);
   }
 
   function onFocusIn(event) {
@@ -358,6 +548,9 @@
       '#prompt-textarea, form.group\\/composer [contenteditable="true"]',
     );
     if (editor) capture('composer-editor-focus', editor, 'auto-focus');
+    const focused = interactiveTarget(event.target) || event.target;
+    if (isElement(focused)) captureSemantic(focused, 'focus');
+    scheduleFullScan(40);
   }
 
   function scanMutationTarget(element) {
@@ -369,7 +562,9 @@
       const trigger = element.closest('button[aria-haspopup], [role="button"][aria-haspopup]');
       if (trigger) capture('model-trigger-open', trigger, 'attribute-open');
     }
+    captureSemantic(element, 'attribute-change');
     scanOverlays();
+    scheduleFullScan(60);
   }
 
   function startObserver() {
@@ -408,21 +603,26 @@
   function downloadGapJson() {
     const basePayload = base.exportPayload();
     const report = {
-      schema: 'chatgpt-original-style-gap-probe/v1',
-      gapProbeVersion: GAP_VERSION,
+      schema: 'chatgpt-original-style-integrated-probe/v1',
+      integratedProbeVersion: GAP_VERSION,
       generatedAt: new Date().toISOString(),
-      sourceReportAssessment: {
-        sourceCaptureCount: 51,
-        sourceUniqueBaselineTypes: 10,
-        sourceStatefulCaptureCount: 0,
-        purpose: 'Collect only the paint owners and stateful UI missing from the supplied Light report.',
+      automation: {
+        visibleAutoCapture: true,
+        mutationAutoCapture: true,
+        hoverAutoCapture: true,
+        focusAutoCapture: true,
+        pointerAndClickAutoCapture: true,
+        keyboardAutoCapture: true,
+        periodicRescanMilliseconds: 1200,
+        semanticCaptureLimit: state.maxSemanticCaptures,
       },
-      coverage: coverage(),
+      knownCoverage: coverage(),
+      semanticCaptureCount: state.semanticSignatures.size,
       baseProbeReport: basePayload,
     };
     const appearance = basePayload.session.appearance.inferredAppearance;
     const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const filename = `chatgpt-original-style-gaps-${appearance}-${stamp}.json`;
+    const filename = `chatgpt-original-style-integrated-${appearance}-${stamp}.json`;
     const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -439,8 +639,9 @@
   function reset() {
     base.state.captures.length = 0;
     state.capturedKeys.clear();
+    state.semanticSignatures.clear();
     renderChecklist();
-    renderStatus('Gap captures cleared.');
+    renderStatus('Integrated captures cleared.');
   }
 
   function button(text, handler) {
@@ -462,15 +663,15 @@
 
   function renderStatus(message) {
     if (state.status) state.status.textContent = message;
-    console.info(`[Original Style Gap Probe] ${message}`);
+    console.info(`[Original Style Integrated Probe] ${message}`);
   }
 
   function renderChecklist() {
     if (!state.checklist) return;
     const missing = EXPECTED_KEYS.filter((key) => !state.capturedKeys.has(key));
     state.checklist.textContent = missing.length
-      ? `Missing (${missing.length}): ${missing.join(', ')}`
-      : 'All expected gap categories captured.';
+      ? `Known coverage ${EXPECTED_KEYS.length - missing.length}/${EXPECTED_KEYS.length} · semantic signatures ${state.semanticSignatures.size} · unresolved: ${missing.join(', ')}`
+      : `Known coverage complete · semantic signatures ${state.semanticSignatures.size}.`;
   }
 
   function onKeyDown(event) {
@@ -520,13 +721,13 @@
     });
 
     const title = document.createElement('strong');
-    title.textContent = `Original Style Gap Probe v${GAP_VERSION}`;
+    title.textContent = `Original Style Integrated Probe v${GAP_VERSION}`;
     title.style.display = 'block';
     title.style.marginBottom = '7px';
 
     const guide = document.createElement('div');
     guide.textContent =
-      'Open menus/dialogs and hover sidebar rows, menu items, composer buttons, code actions, and Work rows for about 0.3 seconds.';
+      'Visible UI and interaction states are captured automatically. Open each menu, dialog, tooltip, and route you want included, then download the JSON.';
     Object.assign(guide.style, { color: '#b8c2ce', marginBottom: '8px' });
 
     const controls = document.createElement('div');
@@ -544,15 +745,15 @@
     });
 
     controls.append(
-      button('Scan visible gaps', scanVisibleGaps),
+      button('Scan now', scanVisibleGaps),
       watchButton,
-      button('Download gap JSON', downloadGapJson),
+      button('Download JSON', downloadGapJson),
       button('Clear', reset),
       button('Close', destroy),
     );
 
     state.status = document.createElement('div');
-    state.status.textContent = 'Ready. Existing baseline captures were cleared.';
+    state.status.textContent = 'Ready. Automatic visible and interaction capture is active.';
     Object.assign(state.status.style, {
       minHeight: '22px',
       color: '#aeb8c4',
@@ -584,29 +785,46 @@
 
   function destroy() {
     clearTimeout(state.hoverTimer);
+    clearTimeout(state.scanTimer);
+    clearInterval(state.periodicTimer);
+    for (const timer of state.postActionTimers) clearTimeout(timer);
+    state.postActionTimers.clear();
     state.observer?.disconnect();
     document.removeEventListener('pointermove', onPointerMove, true);
+    document.removeEventListener('pointerdown', onPointerDown, true);
+    document.removeEventListener('click', onClick, true);
+    document.removeEventListener('keyup', onKeyInteraction, true);
     document.removeEventListener('focusin', onFocusIn, true);
     document.removeEventListener('keydown', onKeyDown, true);
     state.panel?.remove();
     if (state.basePanel) state.basePanel.style.display = state.basePanelDisplay;
     if (window[GAP_KEY]) delete window[GAP_KEY];
-    console.info('[Original Style Gap Probe] Removed.');
+    console.info('[Original Style Integrated Probe] Removed.');
   }
 
   reset();
   base.rebuildRuleIndex();
   createPanel();
   document.addEventListener('pointermove', onPointerMove, true);
+  document.addEventListener('pointerdown', onPointerDown, true);
+  document.addEventListener('click', onClick, true);
   document.addEventListener('focusin', onFocusIn, true);
   document.addEventListener('keydown', onKeyDown, true);
+  document.addEventListener('keyup', onKeyInteraction, true);
   startObserver();
   scanVisibleGaps();
+  scanSemanticVisible();
+  state.periodicTimer = window.setInterval(() => {
+    if (!state.watching || document.visibilityState !== 'visible') return;
+    scanVisibleGaps();
+    scanSemanticVisible();
+  }, 1200);
 
   window[GAP_KEY] = {
     version: GAP_VERSION,
     state,
     scanVisibleGaps,
+    scanSemanticVisible,
     download: downloadGapJson,
     coverage,
     reset,

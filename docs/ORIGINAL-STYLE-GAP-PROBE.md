@@ -1,8 +1,8 @@
-# ChatGPT original-style gap probe
+# ChatGPT original-style integrated extension
 
-`tools/chatgpt-original-style-gap-probe.js` complements the base original-style
-probe. It is tailored to the missing coverage found in the supplied Light
-report.
+`tools/chatgpt-original-style-gap-probe.js` now provides the automatic
+discovery and interaction layer used by Integrated Probe v1.0.0. The legacy
+filename is retained to preserve project history.
 
 ## Assessment of the supplied report
 
@@ -17,31 +17,32 @@ report.
 ## Usage
 
 1. Disable Soft Graphite and other UserCSS, then reload ChatGPT.
-2. Run `chatgpt-original-style-probe.js` v0.1.1.
-3. Run `chatgpt-original-style-gap-probe.js`.
-4. The gap probe clears the base probe capture list and immediately scans only
-   the missing visible paint owners.
+2. Prefer the generated single-file integrated probe.
+3. For source-level testing, run `chatgpt-original-style-probe.js` v0.1.1,
+   then run `chatgpt-original-style-gap-probe.js`.
+4. The extension clears the base capture list and starts automatic visible and
+   stateful capture.
 5. Open the model selector, ordinary menus, settings dialogs, and any tooltip
    that should be represented in the theme.
-6. Hover each relevant item for roughly 0.3 seconds. The probe automatically
-   captures recognized hover targets.
+6. Hover and operate the relevant controls normally. The extension captures
+   recognized hover, focus, press, click, keyboard, open, and selected states.
 7. Focus the composer editor once, preferably by keyboard.
-8. Select **Download gap JSON**.
+8. Select **Download JSON**.
 
-The panel reports which expected categories remain missing. A missing category
-may simply be unavailable on the current route; upload the JSON before doing
-additional captures so the next request can be narrowed further.
+The panel shows known-component coverage and the number of additional semantic
+signatures. Unresolved known categories may simply be unavailable on the
+current route and do not block downloading the report.
 
 ## Shortcuts
 
 ```text
-Alt+Shift+K  Scan visible gaps
+Alt+Shift+K  Scan currently visible UI
 Alt+Shift+G  Capture the currently hovered recognized target
-Alt+Shift+U  Download the gap JSON
+Alt+Shift+U  Download the integrated JSON
 ```
 
 ## Privacy
 
-The gap probe delegates element capture to the base probe. It therefore keeps
+The extension delegates element capture to the base probe. It therefore keeps
 the same privacy behavior: no conversation text, document title, full route
 identifier, `aria-label`, or `title` value is exported.
