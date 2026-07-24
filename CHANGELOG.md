@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.15 (candidate)
+
+- Strengthened the graphite grain to match the visible texture of the Standard Graphite design guide.
+
 ## v1.0.14
 
 - Restored the selected-conversation highlight in the left sidebar by matching the actual empty `data-active` attribute.
