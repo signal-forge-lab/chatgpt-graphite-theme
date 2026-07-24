@@ -1,5 +1,10 @@
 # ChatGPT original-style probe
 
+Current probe version: `0.1.1`
+
+`0.1.1` fixes the probe panel controls so button clicks reach their handlers
+before page-level event propagation is stopped.
+
 `tools/chatgpt-original-style-probe.js` captures the browser styles that are
 actually applied to selected ChatGPT elements before Graphite overrides are
 added.

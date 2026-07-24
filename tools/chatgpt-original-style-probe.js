@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const PROBE_VERSION = '0.1.0';
+  const PROBE_VERSION = '0.1.1';
   const GLOBAL_KEY = '__chatgptOriginalStyleProbe';
   const ROOT_ATTRIBUTE = 'data-chatgpt-original-style-probe';
 
@@ -862,8 +862,13 @@
     });
 
     panel.append(title, warning, labelInput, controls, statusNode, shortcuts);
-    panel.addEventListener('pointerdown', (event) => event.stopPropagation(), true);
-    panel.addEventListener('click', (event) => event.stopPropagation(), true);
+    /*
+     * Stop page-level bubble handlers after the probe controls have received
+     * the event. Using capture here would intercept the event before the
+     * buttons themselves and make every control appear unresponsive.
+     */
+    panel.addEventListener('pointerdown', (event) => event.stopPropagation());
+    panel.addEventListener('click', (event) => event.stopPropagation());
     document.documentElement.append(panel);
 
     highlight = document.createElement('div');
