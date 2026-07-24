@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.14 (candidate)
+
+- Restored the selected-conversation highlight in the left sidebar by matching the actual empty `data-active` attribute.
+- Added a dedicated sidebar-selection token that is darker than the hover surface.
+
 ## v1.0.13
 
 - Removed localized Japanese `aria-label` dependencies from theme selectors.
