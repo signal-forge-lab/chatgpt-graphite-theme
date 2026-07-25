@@ -49,8 +49,6 @@
     --sg-code: #1a1b1c;
     --sg-tooltip: #161819;
     --sg-work-panel: var(--sg-panel);
-    --sg-work-row: rgba(45, 48, 49, 0.72);
-    --sg-work-row-hover: var(--sg-hover-overlay);
     --sg-active-build: "1.0.15";
 
     color-scheme: dark;
@@ -572,49 +570,23 @@
 
   html.dark #page-header aside:has(button.group\/section-toggle)
     :is(ul > li > button, ul > li > a, a[role="link"]) {
-    background-color: var(--sg-work-row) !important;
+    background-color: transparent !important;
     color: var(--sg-text) !important;
     border: 1px solid transparent !important;
     border-radius: 10px !important;
   }
 
   /*
-   * Output/source file rows are passive while idle. Scope them by the
-   * observed section content structure so progress rows remain unchanged:
-   * - Output: section header followed by a direct relative file list.
-   * - Source: the region immediately followed by the source fade markers.
+   * Progress, output, and source rows are passive while idle. Hover and
+   * keyboard focus expose only the structural border so the panel does not
+   * become a stack of filled cards.
    */
   html.dark #page-header aside:has(button.group\/section-toggle)
-    section > .group\/section-header + div.relative
-    > ul > li > :is(button, a).rounded-xl,
-  html.dark #page-header aside:has(button.group\/section-toggle)
-    [role="region"]:has(+ [data-testid="sources-scroll-fade-top"])
-    :is(ul > li > button.rounded-xl, ul > li > a.rounded-xl) {
-    background-color: transparent !important;
-  }
-
-  html.dark #page-header aside:has(button.group\/section-toggle)
-    section > .group\/section-header + div.relative
-    > ul > li > :is(button, a).rounded-xl:is(
-      :hover,
-      :focus-visible
-    ),
-  html.dark #page-header aside:has(button.group\/section-toggle)
-    [role="region"]:has(+ [data-testid="sources-scroll-fade-top"])
-    :is(
-      ul > li > button.rounded-xl,
-      ul > li > a.rounded-xl
-    ):is(
+    :is(ul > li > button, ul > li > a, a[role="link"]):is(
       :hover,
       :focus-visible
     ) {
-    background-color: var(--sg-work-row-hover) !important;
-    border-color: var(--sg-border) !important;
-  }
-
-  html.dark #page-header aside:has(button.group\/section-toggle)
-    :is(ul > li > button, ul > li > a, a[role="link"]):hover {
-    background-color: var(--sg-work-row-hover) !important;
+    background-color: transparent !important;
     border-color: var(--sg-border) !important;
   }
 
