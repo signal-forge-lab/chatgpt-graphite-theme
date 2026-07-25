@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.16
+
+- Refined hover, selected, and model-selector text states using probe-confirmed interaction behavior.
+- Improved surface hierarchy by separating dialogs and Work panels from menus and model popovers.
+- Simplified Work rows to transparent idle surfaces with border-only hover and focus feedback.
+- Standardized structural, surface, and strong borders while moving remaining palette values into reusable tokens.
+- Fixed the Library toolbar background after ChatGPT moved the painted surface to the inner top-controls element.
+
 ## v1.0.15
 
 - Strengthened the graphite grain to match the visible texture of the Standard Graphite design guide.

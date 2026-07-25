@@ -4,29 +4,26 @@ Unofficial Stylus/UserCSS themes for ChatGPT.
 
 ## Stable release
 
-The `main` branch preserves **ChatGPT Soft Graphite v1.0.15** as the current
+The `main` branch preserves **ChatGPT Soft Graphite v1.0.16** as the current
 stable release.
 
-- Stable CSS: `releases/v1.0.15/chatgpt-soft-graphite.user.css`
-- Stable tag: `v1.0.15`
+- Stable CSS: `releases/v1.0.16/chatgpt-soft-graphite.user.css`
+- Stable tag: `v1.0.16`
 
-## Next development line
+## Development lines
 
-The `feature/dual-graphite-palettes` branch develops one UserCSS with two
-palette modes:
+The `feature/standard-graphite` branch develops Standard Graphite as a
+standalone UserCSS while Soft Graphite remains the stable published style.
 
-- ChatGPT Light setting → **Soft Graphite**
-- ChatGPT Dark setting → **Graphite**
-
-The feature branch is intentionally separate from the stable release until its
-visual regression checks are complete.
+The earlier `feature/dual-graphite-palettes` integration branch is retained but
+is currently paused.
 
 ## Branch policy
 
 - `main`: published and visually confirmed stable releases only
-- `feature/dual-graphite-palettes`: the single integration branch for the
-  dual-style architecture
-- tags: immutable published versions such as `v1.0.15`
+- `feature/standard-graphite`: standalone Standard Graphite development
+- `feature/dual-graphite-palettes`: retained, currently paused
+- tags: immutable published versions such as `v1.0.16`
 
 Do not create a new branch for every patch version. Use commits and release
 tags to separate versions.
