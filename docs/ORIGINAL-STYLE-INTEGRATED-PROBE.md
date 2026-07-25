@@ -28,7 +28,7 @@ sources are:
 1. Disable Soft Graphite and every other UserCSS applied to `chatgpt.com`.
 2. Switch ChatGPT to Dark appearance and reload the page.
 3. Run the generated or downloadable
-   `chatgpt-original-style-integrated-probe-v1.0.0.js` as one DevTools Snippet.
+   `chatgpt-original-style-integrated-probe-v1.0.1.js` as one DevTools Snippet.
 4. Open each model selector, ordinary menu, settings surface, dialog,
    tooltip, Work surface, and code-block control that should be represented.
 5. Use the controls normally. Hover, focus, press, open, and selection states
@@ -47,7 +47,9 @@ chatgpt-original-style-integrated-dark-
 ```
 
 The report includes known-component coverage and additional semantic captures.
-Semantic signatures are capped at 220 to prevent uncontrolled JSON growth.
+There is no capture-count cutoff. Exact duplicate semantic signatures are
+deduplicated, while every newly observed component/state signature remains in
+the report.
 
 ## Privacy
 

@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const GAP_VERSION = '1.0.0';
+  const GAP_VERSION = '1.0.1';
   const BASE_KEY = '__chatgptOriginalStyleProbe';
   const GAP_KEY = '__chatgptOriginalStyleIntegratedProbe';
   const ROOT_ATTRIBUTE = 'data-chatgpt-original-style-integrated-probe';
@@ -61,7 +61,6 @@
     periodicTimer: null,
     postActionTimers: new Set(),
     semanticSignatures: new Set(),
-    maxSemanticCaptures: 220,
     panel: null,
     status: null,
     checklist: null,
@@ -411,12 +410,7 @@
   }
 
   function captureSemantic(element, reason = 'visible') {
-    if (
-      !visible(element) ||
-      state.semanticSignatures.size >= state.maxSemanticCaptures
-    ) {
-      return false;
-    }
+    if (!visible(element)) return false;
     const kind = semanticKind(element);
     if (!kind) return false;
     const signature = [
@@ -469,14 +463,9 @@
       '[data-highlighted]',
       'button',
     ];
-    let inspected = 0;
     for (const selector of selectors) {
       for (const element of allVisible(selector)) {
         captureSemantic(element, 'visible');
-        inspected += 1;
-        if (inspected >= 500 || state.semanticSignatures.size >= state.maxSemanticCaptures) {
-          return;
-        }
       }
     }
   }
@@ -614,7 +603,8 @@
         pointerAndClickAutoCapture: true,
         keyboardAutoCapture: true,
         periodicRescanMilliseconds: 1200,
-        semanticCaptureLimit: state.maxSemanticCaptures,
+        semanticCaptureLimit: null,
+        semanticCaptureDeduplication: true,
       },
       knownCoverage: coverage(),
       semanticCaptureCount: state.semanticSignatures.size,

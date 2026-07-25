@@ -18,7 +18,7 @@ const [base, extension] = await Promise.all([
 const normalizeLf = (source) => source.replace(/\r\n?/g, '\n');
 
 const header = `/*
- * ChatGPT Original Style Integrated Probe v1.0.0
+ * ChatGPT Original Style Integrated Probe v1.0.1
  *
  * Single-snippet build:
  * - complete computed-style and matched-rule capture engine
