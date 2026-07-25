@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.16-beta.1
+@version        1.0.16-beta.2
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -61,7 +61,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.16-beta.1";
+    --sg-active-build: "1.0.16-beta.2";
 
     color-scheme: dark;
 
@@ -170,11 +170,14 @@
   /* 3. Route-specific surfaces */
 
   /*
-   * Project directory:
-   * The stable toolbar shell owns the black strip while the surrounding
-   * project scroll root already uses the Soft Graphite canvas.
+   * Project and Library directory toolbar:
+   * The outer shell and the current inner top-controls surface can each own
+   * the toolbar fill. Paint both so route-specific native black does not show
+   * through when ChatGPT moves the background to the inner control row.
    */
-  html.dark [data-testid="page-table-toolbar-shell"] {
+  html.dark [data-testid="page-table-toolbar-shell"],
+  html.dark [data-testid="page-table-toolbar-shell"]
+    [data-testid="artifacts-surface-top-controls"] {
     background-color: var(--sg-canvas) !important;
   }
 
