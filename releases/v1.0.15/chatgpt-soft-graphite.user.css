@@ -35,7 +35,9 @@
     --sg-selected-overlay: rgba(255, 255, 255, 0.10);
     --sg-sidebar-selected: #2b2d2f;
     --sg-active: #424241;
-    --sg-border: #2a2c2e;
+    --sg-border-structural: #2a2c2e;
+    --sg-border-surface: rgba(255, 255, 255, 0.06);
+    --sg-border-strong: #4b4b49;
     --sg-grain-opacity: 0.060;
 
     --sg-text: #e7e9ec;
@@ -80,12 +82,12 @@
     --text-secondary: var(--sg-text-secondary) !important;
     --text-tertiary: var(--sg-text-tertiary) !important;
 
-    --border-light: rgba(42, 44, 46, 0.62) !important;
-    --border-extra-light: rgba(42, 44, 46, 0.45) !important;
-    --border-xlight: rgba(42, 44, 46, 0.45) !important;
-    --border-sharp: rgba(42, 44, 46, 0.62) !important;
-    --border-default: var(--sg-border) !important;
-    --border-medium: var(--sg-border) !important;
+    --border-light: var(--sg-border-surface) !important;
+    --border-extra-light: var(--sg-border-surface) !important;
+    --border-xlight: var(--sg-border-surface) !important;
+    --border-sharp: var(--sg-border-structural) !important;
+    --border-default: var(--sg-border-structural) !important;
+    --border-medium: var(--sg-border-structural) !important;
     --border-heavy: #343638 !important;
     --border-xheavy: #414345 !important;
 
@@ -186,7 +188,7 @@
   html.dark
     header:has(a[data-testid="create-gpt-discovery-button"]) {
     background-color: var(--sg-canvas) !important;
-    border-bottom: 1px solid rgba(42, 44, 46, 0.45) !important;
+    border-bottom: 1px solid var(--sg-border-structural) !important;
     box-shadow: none !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -213,7 +215,7 @@
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
-    border-bottom: 1px solid rgba(42, 44, 46, 0.45) !important;
+    border-bottom: 1px solid var(--sg-border-structural) !important;
     box-shadow: none !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -244,7 +246,7 @@
     ):is(:hover, :focus-visible) {
     background-color: var(--sg-control-surface) !important;
     color: var(--sg-text) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border) !important;
+    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
   }
 
   html.dark #page-header
@@ -256,7 +258,7 @@
       #conversation-header-actions > div > span > button
     ):is([data-state="open"], [aria-expanded="true"]) {
     background-color: var(--sg-active) !important;
-    box-shadow: inset 0 0 0 1px #4b4b49 !important;
+    box-shadow: inset 0 0 0 1px var(--sg-border-strong) !important;
   }
 
   /*
@@ -281,7 +283,7 @@
     button[role="radio"]:focus-visible {
     background-color: var(--sg-control-surface) !important;
     color: var(--sg-text) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border) !important;
+    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
   }
 
   /*
@@ -297,7 +299,7 @@
   html.dark #page-header
     #conversation-header-actions > div > span > button:focus-visible {
     background-color: var(--sg-control-surface) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border) !important;
+    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
   }
 
   /*
@@ -323,12 +325,12 @@
   html.dark #page-header
     a[href*="/g/g-p-"]:is(:hover, :focus-visible) {
     background-color: var(--sg-control-surface) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border) !important;
+    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
   }
 
   /* 5. Sidebar */
   html.dark #stage-slideover-sidebar {
-    border-inline-end-color: var(--sg-border) !important;
+    border-inline-end-color: var(--sg-border-structural) !important;
   }
 
   html.dark #stage-slideover-sidebar
@@ -372,7 +374,7 @@
   /* 6. Composer and bottom fade */
   html.dark form.group\/composer > div.relative > div.cursor-text {
     box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.055) !important;
+      inset 0 0 0 1px var(--sg-border-surface) !important;
   }
 
   html.dark #prompt-textarea,
@@ -483,7 +485,7 @@
   html.dark [data-message-author-role="user"]
     .user-message-bubble-color {
     background-color: var(--sg-user-bubble) !important;
-    border-color: rgba(42, 44, 46, 0.45) !important;
+    border-color: var(--sg-border-surface) !important;
     border-radius: 22px 8px 22px 22px !important;
   }
 
@@ -505,7 +507,7 @@
   ).interactive-bg-secondary {
     background-color: var(--sg-control-surface) !important;
     color: var(--sg-text) !important;
-    border-color: var(--sg-border) !important;
+    border-color: var(--sg-border-surface) !important;
     overflow: hidden !important;
   }
 
@@ -515,7 +517,7 @@
     a
   ).interactive-bg-secondary:hover {
     background-color: var(--sg-control-hover) !important;
-    border-color: #424241 !important;
+    border-color: var(--sg-border-strong) !important;
   }
 
   html.dark :is(
@@ -540,12 +542,12 @@
   html.dark :is(.markdown, .prose) :is(p, li, td, th, blockquote) > code {
     background-color: #292b2c !important;
     color: #dbe3ec !important;
-    border: 1px solid rgba(42, 44, 46, 0.45);
+    border: 1px solid var(--sg-border-surface);
     border-radius: 4px;
   }
 
   html.dark table {
-    border-color: var(--sg-border) !important;
+    border-color: var(--sg-border-surface) !important;
   }
 
   html.dark th {
@@ -553,7 +555,7 @@
   }
 
   html.dark :is(td, th) {
-    border-color: var(--sg-border) !important;
+    border-color: var(--sg-border-surface) !important;
   }
 
   html.dark blockquote {
@@ -564,7 +566,7 @@
   /* 9. Work task panel */
   html.dark #page-header aside:has(button.group\/section-toggle) {
     background-color: var(--sg-work-panel) !important;
-    border-color: var(--sg-border) !important;
+    border-color: var(--sg-border-surface) !important;
     box-shadow: none !important;
   }
 
@@ -587,7 +589,7 @@
       :focus-visible
     ) {
     background-color: transparent !important;
-    border-color: var(--sg-border) !important;
+    border-color: var(--sg-border-surface) !important;
   }
 
   html.dark #page-header aside:has(button.group\/section-toggle)
@@ -597,16 +599,16 @@
       [data-state="active"]
     ) {
     background-color: var(--sg-active) !important;
-    border-color: #4b4b49 !important;
+    border-color: var(--sg-border-strong) !important;
   }
 
   html.dark #page-header aside:has(button.group\/section-toggle)
     section + section {
-    border-top-color: var(--sg-border) !important;
+    border-top-color: var(--sg-border-structural) !important;
   }
 
   html.dark #page-header aside:has(button.group\/section-toggle) hr {
-    border-color: var(--sg-border) !important;
+    border-color: var(--sg-border-structural) !important;
     opacity: 0.7;
   }
 
@@ -628,16 +630,16 @@
     button.group\/section-toggle:is(:hover, :focus-visible) {
     background-color: var(--sg-control-surface) !important;
     color: var(--sg-text) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border) !important;
+    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
   }
 
   /* 10. Dialogs and tooltips */
   html.dark [role="dialog"] {
     background-color: var(--sg-panel) !important;
-    border-color: var(--sg-border) !important;
+    border-color: var(--sg-border-surface) !important;
     box-shadow:
       0 18px 48px rgba(0, 0, 0, 0.32),
-      0 0 0 1px rgba(42, 44, 46, 0.45) !important;
+      0 0 0 1px var(--sg-border-surface) !important;
   }
 
   /*
@@ -650,7 +652,7 @@
     border: 0 !important;
     border-radius: 8px !important;
     box-shadow:
-      inset 0 0 0 1px var(--sg-border),
+      inset 0 0 0 1px var(--sg-border-surface),
       0 6px 18px rgba(0, 0, 0, 0.28) !important;
     overflow: hidden !important;
   }
@@ -727,7 +729,7 @@
     -webkit-clip-path: inset(0 round 16px) !important;
     overflow-y: auto !important;
     box-shadow:
-      inset 0 0 0 1px rgba(42, 44, 46, 0.72) !important;
+      inset 0 0 0 1px var(--sg-border-surface) !important;
   }
 
   html.dark :is(
