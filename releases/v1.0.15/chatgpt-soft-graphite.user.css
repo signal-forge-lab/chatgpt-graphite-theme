@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.15
+@version        1.0.16-beta.1
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -61,7 +61,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.15";
+    --sg-active-build: "1.0.16-beta.1";
 
     color-scheme: dark;
 
@@ -269,6 +269,27 @@
     ):is([data-state="open"], [aria-expanded="true"]) {
     background-color: var(--sg-active) !important;
     box-shadow: inset 0 0 0 1px var(--sg-border-strong) !important;
+  }
+
+  /*
+   * The model selector is the composer-pill trigger in the page header.
+   * Native Dark keeps its closed label secondary, including hover, and raises
+   * it to primary only while the model menu is open.
+   */
+  html.dark #page-header
+    button.__composer-pill:is(
+      [data-state="closed"],
+      [aria-expanded="false"]
+    ) {
+    color: var(--sg-text-secondary) !important;
+  }
+
+  html.dark #page-header
+    button.__composer-pill:is(
+      [data-state="open"],
+      [aria-expanded="true"]
+    ) {
+    color: var(--sg-text) !important;
   }
 
   /*
@@ -900,7 +921,7 @@
    */
   html.dark body #main
     input#search#search[role="combobox"][class~="bg-token-main-surface-primary!"] {
-    background-color: #2d3031 !important;
+    background-color: var(--sg-control-surface) !important;
   }
 
 }
