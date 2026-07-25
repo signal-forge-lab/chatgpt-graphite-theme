@@ -27,9 +27,11 @@
     --sg-control-surface: #2d3031;
     --sg-user-bubble: var(--sg-control-surface);
     --sg-composer: var(--sg-control-surface);
+    --sg-composer-solid: rgba(45, 48, 49, 0.98);
     --sg-card: #393a3e;
     --sg-panel: #242627;
     --sg-popover: #393a3e;
+    --sg-sidebar-secondary: #191b1c;
     --sg-control-hover: #363636;
     --sg-hover-overlay: rgba(255, 255, 255, 0.07);
     --sg-selected-overlay: rgba(255, 255, 255, 0.10);
@@ -38,6 +40,8 @@
     --sg-border-structural: #2a2c2e;
     --sg-border-surface: rgba(255, 255, 255, 0.06);
     --sg-border-strong: #4b4b49;
+    --sg-border-heavy: #343638;
+    --sg-border-xheavy: #414345;
     --sg-grain-opacity: 0.060;
 
     --sg-text: #e7e9ec;
@@ -46,11 +50,17 @@
 
     --sg-accent: #7aa2f7;
     --sg-accent-soft: rgba(122, 162, 247, 0.14);
+    --sg-accent-muted: rgba(122, 162, 247, 0.08);
+    --sg-accent-press: rgba(122, 162, 247, 0.20);
     --sg-selection: rgba(122, 162, 247, 0.25);
 
     --sg-code: #1a1b1c;
+    --sg-inline-code: #292b2c;
+    --sg-inline-code-text: #dbe3ec;
     --sg-tooltip: #161819;
     --sg-work-panel: var(--sg-panel);
+    --sg-scrollbar: #47494b;
+    --sg-scrollbar-hover: #5c5f62;
     --sg-active-build: "1.0.15";
 
     color-scheme: dark;
@@ -61,7 +71,7 @@
     --main-surface-tertiary: var(--sg-card) !important;
 
     --sidebar-surface-primary: var(--sg-sidebar) !important;
-    --sidebar-surface-secondary: #191b1c !important;
+    --sidebar-surface-secondary: var(--sg-sidebar-secondary) !important;
     --sidebar-surface-tertiary: var(--sg-content) !important;
     --component-sidebar-bg: var(--sg-sidebar) !important;
 
@@ -75,7 +85,7 @@
     --bg-secondary-surface: var(--sg-card) !important;
 
     --composer-surface-primary: var(--sg-composer) !important;
-    --composer-surface: rgba(45, 48, 49, 0.98) !important;
+    --composer-surface: var(--sg-composer-solid) !important;
     --code-block-surface: var(--sg-code) !important;
 
     --text-primary: var(--sg-text) !important;
@@ -88,21 +98,21 @@
     --border-sharp: var(--sg-border-structural) !important;
     --border-default: var(--sg-border-structural) !important;
     --border-medium: var(--sg-border-structural) !important;
-    --border-heavy: #343638 !important;
-    --border-xheavy: #414345 !important;
+    --border-heavy: var(--sg-border-heavy) !important;
+    --border-xheavy: var(--sg-border-xheavy) !important;
 
-    --default-theme-user-msg-bg: var(--sg-content) !important;
+    --default-theme-user-msg-bg: var(--sg-user-bubble) !important;
     --default-theme-user-msg-text: var(--sg-text) !important;
-    --black-theme-user-msg-bg: var(--sg-content) !important;
+    --black-theme-user-msg-bg: var(--sg-user-bubble) !important;
     --black-theme-user-msg-text: var(--sg-text) !important;
     --default-theme-user-selection-bg: var(--sg-selection) !important;
     --black-theme-user-selection-bg: var(--sg-selection) !important;
 
     --interactive-bg-accent-hover: var(--sg-accent-soft) !important;
-    --interactive-bg-accent-press: rgba(122, 162, 247, 0.20) !important;
-    --interactive-bg-accent-muted-context: rgba(122, 162, 247, 0.08) !important;
-    --interactive-bg-accent-muted-hover: rgba(122, 162, 247, 0.14) !important;
-    --interactive-bg-accent-muted-press: rgba(122, 162, 247, 0.20) !important;
+    --interactive-bg-accent-press: var(--sg-accent-press) !important;
+    --interactive-bg-accent-muted-context: var(--sg-accent-muted) !important;
+    --interactive-bg-accent-muted-hover: var(--sg-accent-soft) !important;
+    --interactive-bg-accent-muted-press: var(--sg-accent-press) !important;
 
     --icon-accent: var(--sg-accent) !important;
     --composer-blue-text: var(--sg-accent) !important;
@@ -540,8 +550,8 @@
   }
 
   html.dark :is(.markdown, .prose) :is(p, li, td, th, blockquote) > code {
-    background-color: #292b2c !important;
-    color: #dbe3ec !important;
+    background-color: var(--sg-inline-code) !important;
+    color: var(--sg-inline-code-text) !important;
     border: 1px solid var(--sg-border-surface);
     border-radius: 4px;
   }
@@ -782,7 +792,7 @@
     .overflow-x-auto,
     .overflow-y-auto
   ) {
-    scrollbar-color: #47494b transparent;
+    scrollbar-color: var(--sg-scrollbar) transparent;
   }
 
   html.dark::-webkit-scrollbar,
@@ -852,7 +862,7 @@
     .overflow-x-auto,
     .overflow-y-auto
   )::-webkit-scrollbar-thumb {
-    background-color: #47494b;
+    background-color: var(--sg-scrollbar);
     border: 3px solid transparent;
     border-radius: 999px;
     background-clip: padding-box;
@@ -878,12 +888,12 @@
     .overflow-x-auto,
     .overflow-y-auto
   )::-webkit-scrollbar-thumb:hover {
-    background-color: #5c5f62;
+    background-color: var(--sg-scrollbar-hover);
   }
   /*
    * GPT discovery search input cascade fallback:
    * Probe v3 confirmed that this input is the paint owner and that replacing
-   * background-color alone changes rgb(0, 0, 0) to rgb(45, 48, 49).
+   * background-color alone changes the native black fill to the control token.
    *
    * Keep this rule last so it wins the native `bg-token-main-surface-primary!`
    * utility without changing the surrounding border or focus treatment.
