@@ -28,6 +28,8 @@
     --sg-user-bubble: var(--sg-control-surface);
     --sg-composer: var(--sg-control-surface);
     --sg-card: #393a3e;
+    --sg-panel: #242627;
+    --sg-popover: #393a3e;
     --sg-control-hover: #363636;
     --sg-hover-overlay: rgba(255, 255, 255, 0.07);
     --sg-selected-overlay: rgba(255, 255, 255, 0.10);
@@ -46,7 +48,7 @@
 
     --sg-code: #1a1b1c;
     --sg-tooltip: #161819;
-    --sg-work-panel: #242627;
+    --sg-work-panel: var(--sg-panel);
     --sg-work-row: rgba(45, 48, 49, 0.72);
     --sg-work-row-hover: var(--sg-hover-overlay);
     --sg-active-build: "1.0.15";
@@ -659,7 +661,7 @@
 
   /* 10. Dialogs and tooltips */
   html.dark [role="dialog"] {
-    background-color: var(--sg-card) !important;
+    background-color: var(--sg-panel) !important;
     border-color: var(--sg-border) !important;
     box-shadow:
       0 18px 48px rgba(0, 0, 0, 0.32),
@@ -695,7 +697,7 @@
     [data-radix-menu-content],
     [data-radix-select-content]
   ) {
-    background-color: var(--sg-card) !important;
+    background-color: var(--sg-popover) !important;
     border: 0 !important;
     outline: 0 !important;
   }
