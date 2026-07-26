@@ -13,7 +13,7 @@ A refined, unofficial dark theme for ChatGPT built around a calm, low-contrast S
 * Supports temporary chat controls
 * Highlights the currently selected conversation in the sidebar
 * Adds a subtle graphite-like grain across the interface
-* Uses no external fonts, images, scripts, or tracking
+* Makes no external font or image requests and includes no scripts or tracking
 
 ### Requirements
 
