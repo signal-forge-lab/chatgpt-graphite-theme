@@ -22,7 +22,13 @@ A refined, unofficial dark theme for ChatGPT built around a calm, low-contrast S
 
 ### Installation
 
-Install the style through UserStyles.world and enable it for `chatgpt.com`.
+Recommended: install the canonical UserCSS directly from GitHub Raw.
+
+* [Install from GitHub](https://raw.githubusercontent.com/signal-forge-lab/chatgpt-graphite-theme/main/chatgpt-soft-graphite.user.css)
+* [Install from UserStyles.world](https://userstyles.world/style/29175/chatgpt-soft-graphite)
+
+The GitHub version remains available when UserStyles.world is unavailable and
+can receive updates through the embedded `@updateURL`.
 
 Disable older release-candidate versions before enabling the stable version.
 
