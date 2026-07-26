@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.17
+
+- Added a flat, low-contrast Header Control Style for header actions, using neutral hover, focus, open, and pressed states.
+- Applied the Soft Graphite palette to the enabled Composer submit button instead of the default white surface.
+
 ## v1.0.16
 
 - Refined hover, selected, and model-selector text states using probe-confirmed interaction behavior.
