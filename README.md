@@ -9,6 +9,7 @@ stable release.
 
 - Stable CSS: `releases/v1.0.17/chatgpt-soft-graphite.user.css`
 - Stable tag: `v1.0.17`
+- UserStyles.world note: `docs/USERSTYLES_WORLD_NOTE.md`
 
 ## Development lines
 
