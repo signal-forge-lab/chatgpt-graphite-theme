@@ -1,0 +1,992 @@
+/* ==UserStyle==
+@name           ChatGPT Soft Graphite
+@namespace      meio-dia.chatgpt-soft-graphite
+@version        1.0.17
+@description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
+@author         meio-dia
+@license        MIT
+@match          https://chatgpt.com/*
+@run-at         document-start
+==/UserStyle== */
+
+/*
+ * ChatGPT Soft Graphite
+ * Copyright (c) 2026 meio-dia
+ * Licensed under the MIT License.
+ *
+ * Unofficial userstyle for ChatGPT.
+ * Not affiliated with, endorsed by, or sponsored by OpenAI.
+ */
+
+@-moz-document domain("chatgpt.com") {
+  /* 1. Design tokens */
+  html.dark {
+    --sg-sidebar: #131617;
+    --sg-canvas: #1e1f20;
+    --sg-content: #2d3030;
+    --sg-control-surface: #2d3031;
+    --sg-user-bubble: var(--sg-control-surface);
+    --sg-composer: var(--sg-control-surface);
+    --sg-composer-solid: rgba(45, 48, 49, 0.98);
+    --sg-card: #393a3e;
+    --sg-panel: #242627;
+    --sg-popover: #393a3e;
+    --sg-sidebar-secondary: #191b1c;
+    --sg-control-hover: #363636;
+    --sg-hover-overlay: rgba(255, 255, 255, 0.07);
+    --sg-selected-overlay: rgba(255, 255, 255, 0.10);
+    --sg-header-control-hover: rgba(255, 255, 255, 0.055);
+    --sg-header-control-focus: rgba(255, 255, 255, 0.075);
+    --sg-header-control-pressed: rgba(255, 255, 255, 0.035);
+    --sg-header-control-border: rgba(255, 255, 255, 0.12);
+    --sg-sidebar-selected: #2b2d2f;
+    --sg-active: #424241;
+    --sg-border-structural: #2a2c2e;
+    --sg-border-surface: rgba(255, 255, 255, 0.06);
+    --sg-border-strong: #4b4b49;
+    --sg-border-heavy: #343638;
+    --sg-border-xheavy: #414345;
+    --sg-grain-opacity: 0.060;
+
+    --sg-text: #e7e9ec;
+    --sg-text-secondary: #a7aaac;
+    --sg-text-tertiary: #8e9295;
+
+    --sg-accent: #7aa2f7;
+    --sg-accent-soft: rgba(122, 162, 247, 0.14);
+    --sg-accent-muted: rgba(122, 162, 247, 0.08);
+    --sg-accent-press: rgba(122, 162, 247, 0.20);
+    --sg-selection: rgba(122, 162, 247, 0.25);
+
+    --sg-code: #1a1b1c;
+    --sg-inline-code: #292b2c;
+    --sg-inline-code-text: #dbe3ec;
+    --sg-tooltip: #161819;
+    --sg-work-panel: var(--sg-panel);
+    --sg-scrollbar: #47494b;
+    --sg-scrollbar-hover: #5c5f62;
+    --sg-active-build: "1.0.17";
+
+    color-scheme: dark;
+
+    --main-surface-background: var(--sg-canvas) !important;
+    --main-surface-primary: var(--sg-canvas) !important;
+    --main-surface-secondary: var(--sg-content) !important;
+    --main-surface-tertiary: var(--sg-card) !important;
+
+    --sidebar-surface-primary: var(--sg-sidebar) !important;
+    --sidebar-surface-secondary: var(--sg-sidebar-secondary) !important;
+    --sidebar-surface-tertiary: var(--sg-content) !important;
+    --component-sidebar-bg: var(--sg-sidebar) !important;
+
+    --surface-primary: var(--sg-canvas) !important;
+    --surface-secondary: var(--sg-content) !important;
+    --surface-tertiary: var(--sg-card) !important;
+    --surface-hover: var(--sg-hover-overlay) !important;
+
+    --bg-primary: var(--sg-canvas) !important;
+    --bg-secondary: var(--sg-content) !important;
+    --bg-secondary-surface: var(--sg-card) !important;
+
+    --composer-surface-primary: var(--sg-composer) !important;
+    --composer-surface: var(--sg-composer-solid) !important;
+    --code-block-surface: var(--sg-code) !important;
+
+    --text-primary: var(--sg-text) !important;
+    --text-secondary: var(--sg-text-secondary) !important;
+    --text-tertiary: var(--sg-text-tertiary) !important;
+
+    --border-light: var(--sg-border-surface) !important;
+    --border-extra-light: var(--sg-border-surface) !important;
+    --border-xlight: var(--sg-border-surface) !important;
+    --border-sharp: var(--sg-border-structural) !important;
+    --border-default: var(--sg-border-structural) !important;
+    --border-medium: var(--sg-border-structural) !important;
+    --border-heavy: var(--sg-border-heavy) !important;
+    --border-xheavy: var(--sg-border-xheavy) !important;
+
+    --default-theme-user-msg-bg: var(--sg-user-bubble) !important;
+    --default-theme-user-msg-text: var(--sg-text) !important;
+    --black-theme-user-msg-bg: var(--sg-user-bubble) !important;
+    --black-theme-user-msg-text: var(--sg-text) !important;
+    --default-theme-submit-btn-bg: var(--sg-active) !important;
+    --default-theme-submit-btn-text: var(--sg-text) !important;
+    --black-theme-submit-btn-bg: var(--sg-active) !important;
+    --black-theme-submit-btn-text: var(--sg-text) !important;
+    --default-theme-user-selection-bg: var(--sg-selection) !important;
+    --black-theme-user-selection-bg: var(--sg-selection) !important;
+
+    --interactive-bg-accent-hover: var(--sg-accent-soft) !important;
+    --interactive-bg-accent-press: var(--sg-accent-press) !important;
+    --interactive-bg-accent-muted-context: var(--sg-accent-muted) !important;
+    --interactive-bg-accent-muted-hover: var(--sg-accent-soft) !important;
+    --interactive-bg-accent-muted-press: var(--sg-accent-press) !important;
+
+    --icon-accent: var(--sg-accent) !important;
+    --composer-blue-text: var(--sg-accent) !important;
+  }
+
+  /* 2. Canvas and typography */
+  html.dark,
+  html.dark body {
+    background: var(--sg-canvas) !important;
+    color: var(--sg-text) !important;
+  }
+
+  /*
+   * Fine graphite grain, strengthened to match the Graphite design guide.
+   * The fixed overlay is visual only and remains above route and portal
+   * surfaces without intercepting pointer input.
+   */
+  html.dark body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 2147483646;
+    pointer-events: none;
+    opacity: var(--sg-grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.72'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    mix-blend-mode: soft-light;
+  }
+
+  html.dark :is(#main, #thread, [data-scroll-root]) {
+    background-color: var(--sg-canvas) !important;
+  }
+
+  html.dark section[data-testid^="conversation-turn-"] {
+    color: var(--sg-text) !important;
+  }
+
+  html.dark .text-token-text-secondary {
+    color: var(--sg-text-secondary) !important;
+  }
+
+  html.dark .text-token-text-tertiary {
+    color: var(--sg-text-tertiary) !important;
+  }
+
+  html.dark ::selection {
+    background: var(--sg-selection) !important;
+    color: var(--sg-text) !important;
+  }
+
+  html.dark :focus-visible {
+    outline-color: var(--sg-accent) !important;
+  }
+
+  /* 3. Route-specific surfaces */
+
+  /*
+   * Project and Library directory toolbar:
+   * The outer shell and the current inner top-controls surface can each own
+   * the toolbar fill. Paint both so route-specific native black does not show
+   * through when ChatGPT moves the background to the inner control row.
+   */
+  html.dark [data-testid="page-table-toolbar-shell"],
+  html.dark [data-testid="page-table-toolbar-shell"]
+    [data-testid="artifacts-surface-top-controls"] {
+    background-color: var(--sg-canvas) !important;
+  }
+
+  /*
+   * Home prompt suggestions:
+   * The roleless wrapper, not the UL itself, owns the black background.
+   * Keep it visually continuous with the main canvas.
+   */
+  html.dark #thread-bottom-container
+    div.bg-surface-primary.w-full:has(
+      > ul.w-full.flex-col.pb-2\.5.px-5.pt-3.flex
+    ) {
+    background-color: var(--sg-canvas) !important;
+  }
+
+  /*
+   * GPT discovery header:
+   * This route no longer uses #page-header. Scope the standard header surface
+   * to the header containing the stable create-GPT action.
+   */
+  html.dark
+    header:has(a[data-testid="create-gpt-discovery-button"]) {
+    background-color: var(--sg-canvas) !important;
+    border-bottom: 1px solid var(--sg-border-structural) !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  /*
+   * GPT discovery search and category sticky regions:
+   * Both native surfaces resolve to the raised-card token on this route,
+   * although they are part of the main page canvas.
+   */
+  html.dark #main
+    div.sticky:has(
+      input#search[role="combobox"]
+    ),
+  html.dark #main
+    div.sticky:has(
+      input#search[role="combobox"]
+    ) > div.sticky {
+    background-color: var(--sg-canvas) !important;
+  }
+
+  /* 4. Sticky page header */
+  html.dark #page-header {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--sg-border-structural) !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  /*
+   * Header Control Style is intentionally limited to the page header. Idle
+   * controls remain transparent, hover adds only a faint tonal surface, and
+   * keyboard focus/open states use a neutral outline without accent color.
+   * Task-panel controls and the Chat/Work segmented switch remain excluded.
+   */
+  html.dark #page-header
+    :is(a, button, [role="button"]):not(
+      aside:has(button.group\/section-toggle) *
+    ):not(
+      [role="radio"][data-radix-collection-item]
+    ):not(
+      #conversation-header-actions > div > span > button
+    ) {
+    background-color: transparent !important;
+    color: var(--sg-text) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header
+    :is(a, button, [role="button"]):not(
+      aside:has(button.group\/section-toggle) *
+    ):not(
+      [role="radio"][data-radix-collection-item]
+    ):not(
+      #conversation-header-actions > div > span > button
+    ):hover {
+    background-color: var(--sg-header-control-hover) !important;
+    color: var(--sg-text) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header
+    :is(a, button, [role="button"]):not(
+      aside:has(button.group\/section-toggle) *
+    ):not(
+      [role="radio"][data-radix-collection-item]
+    ):not(
+      #conversation-header-actions > div > span > button
+    ):active {
+    background-color: var(--sg-header-control-pressed) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header
+    :is(a, button, [role="button"]):not(
+      aside:has(button.group\/section-toggle) *
+    ):not(
+      [role="radio"][data-radix-collection-item]
+    ):not(
+      #conversation-header-actions > div > span > button
+    ):is(
+      :focus-visible,
+      [data-state="open"],
+      [aria-expanded="true"]
+    ) {
+    background-color: var(--sg-header-control-focus) !important;
+    color: var(--sg-text) !important;
+    outline: none !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-header-control-border) !important;
+  }
+
+  /*
+   * The model selector is the composer-pill trigger in the page header.
+   * Native Dark keeps its closed label secondary, including hover, and raises
+   * it to primary only while the model menu is open.
+   */
+  html.dark #page-header
+    button.__composer-pill:is(
+      [data-state="closed"],
+      [aria-expanded="false"]
+    ) {
+    color: var(--sg-text-secondary) !important;
+  }
+
+  html.dark #page-header
+    button.__composer-pill:is(
+      [data-state="open"],
+      [aria-expanded="true"]
+    ) {
+    color: var(--sg-text) !important;
+  }
+
+  /*
+   * Chat/Work is a segmented radio group, not a pair of ordinary header
+   * buttons. Preserve each half's inherited pill geometry and semantic text
+   * state; paint interaction feedback on the actual radio surface.
+   */
+  html.dark #page-header
+    [role="group"]:has(button[role="radio"][data-radix-collection-item])
+    button[role="radio"][aria-checked="true"] {
+    color: var(--sg-text) !important;
+  }
+
+  html.dark #page-header
+    [role="group"]:has(button[role="radio"][data-radix-collection-item])
+    button[role="radio"][aria-checked="false"] {
+    color: var(--sg-text-secondary) !important;
+  }
+
+  html.dark #page-header
+    [role="group"]:has(button[role="radio"][data-radix-collection-item])
+    button[role="radio"]:focus-visible {
+    background-color: var(--sg-header-control-focus) !important;
+    color: var(--sg-text) !important;
+    outline: none !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-header-control-border) !important;
+  }
+
+  /*
+   * The temporary-chat action is a circular 36px button. Its translucent
+   * wrapper is layout-only; otherwise the wrapper's 8px black surface remains
+   * visible behind the circular interaction state.
+   */
+  html.dark #page-header
+    #conversation-header-actions > div > span > button:hover {
+    background-color: var(--sg-header-control-hover) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header
+    #conversation-header-actions > div > span > button:active {
+    background-color: var(--sg-header-control-pressed) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header
+    #conversation-header-actions > div > span > button:focus-visible {
+    background-color: var(--sg-header-control-focus) !important;
+    outline: none !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-header-control-border) !important;
+  }
+
+  /*
+   * Probe-confirmed paint owner:
+   * ChatGPT's .translucent-surface applies the black group background to
+   * #conversation-header-actions. Only that background color is overridden.
+   */
+  html.dark #page-header
+    #conversation-header-actions.translucent-surface {
+    background-color: transparent !important;
+  }
+
+  /*
+   * Project header chip: the translucent wrapper is the surface owner.
+   * Keep only that wrapper paint-free; descendants retain their native
+   * geometry and interaction behavior.
+   */
+  html.dark #page-header
+    .translucent-surface:has(a[href*="/g/g-p-"]) {
+    background-color: transparent !important;
+  }
+
+  html.dark #page-header a[href*="/g/g-p-"]:hover {
+    background-color: var(--sg-header-control-hover) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header a[href*="/g/g-p-"]:active {
+    background-color: var(--sg-header-control-pressed) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header a[href*="/g/g-p-"]:focus-visible {
+    background-color: var(--sg-header-control-focus) !important;
+    outline: none !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-header-control-border) !important;
+  }
+
+  /* 5. Sidebar */
+  html.dark #stage-slideover-sidebar {
+    border-inline-end-color: var(--sg-border-structural) !important;
+  }
+
+  html.dark #stage-slideover-sidebar
+    :is(
+      .__menu-item,
+      a[data-testid^="sidebar-item-"],
+      a[data-testid="plugins-button"]
+    ) {
+    background-color: transparent !important;
+  }
+
+  html.dark #stage-slideover-sidebar
+    :is(
+      .__menu-item,
+      .hoverable,
+      [class~="hover:bg-token-surface-hover"]
+    ):hover {
+    background-color: var(--sg-hover-overlay) !important;
+  }
+
+  html.dark #stage-slideover-sidebar
+    :is(a, button):is(
+      [aria-current="page"],
+      [aria-selected="true"],
+      [data-active="true"],
+      [data-state="active"]
+    ) {
+    background-color: var(--sg-active) !important;
+  }
+
+  /*
+   * Current conversation links expose an empty data-active attribute rather
+   * than data-active="true". Keep the selected row darker than hover while
+   * limiting the override to actual conversation links.
+   */
+  html.dark #stage-slideover-sidebar
+    a[data-sidebar-item="true"][href*="/c/"][data-active] {
+    background-color: var(--sg-sidebar-selected) !important;
+  }
+
+  /* 6. Composer and bottom fade */
+  html.dark form.group\/composer > div.relative > div.cursor-text {
+    box-shadow:
+      inset 0 0 0 1px var(--sg-border-surface) !important;
+  }
+
+  html.dark #prompt-textarea,
+  html.dark #prompt-textarea p,
+  html.dark #prompt-textarea.ProseMirror {
+    color: var(--sg-text) !important;
+  }
+
+  html.dark #prompt-textarea[data-placeholder]::before,
+  html.dark #prompt-textarea p.is-editor-empty:first-child::before {
+    color: var(--sg-text-tertiary) !important;
+  }
+
+  /*
+   * Keep the enabled composer submit action inside the Soft Graphite palette.
+   * Native hover, pressed, and disabled opacity behavior remains unchanged.
+   */
+  html.dark button.composer-submit-button-color:not(:disabled) {
+    background-color: var(--sg-active) !important;
+    color: var(--sg-text) !important;
+  }
+
+  html.dark #thread-bottom-container
+    div.select-none.text-xs.max-w-fit {
+    background-color: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    color: var(--sg-text-tertiary) !important;
+  }
+
+  /*
+   * Confirmed stacking fix:
+   * isolate the negative-z fade inside the bottom container and make the
+   * entire composer zone opaque, so conversation content cannot show through
+   * behind the composer.
+   */
+  html.dark #thread-bottom-container {
+    isolation: isolate !important;
+    background-color: var(--sg-canvas) !important;
+  }
+
+  html.dark #thread-bottom-container::after {
+    content: "" !important;
+    position: absolute !important;
+
+    inset: -148px 0 0 0 !important;
+    inset-inline-start: auto !important;
+    inset-inline-end: auto !important;
+    top: -148px !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: none !important;
+
+    /*
+     * ChatGPT centers its native fade with translateX(-50%).
+     * This theme anchors the fade with left/right: 0, so the native
+     * transform would shift the full-width surface half a container left.
+     */
+    transform: none !important;
+    background-color: var(--sg-canvas) !important;
+
+    /*
+     * Extended bottom fade:
+     * The transition begins 16px higher while still reaching full opacity
+     * 50px above the bottom container.
+     */
+    mask-image:
+      linear-gradient(
+        to bottom,
+        transparent 0,
+        rgba(0, 0, 0, 0.08) 14px,
+        rgba(0, 0, 0, 0.28) 34px,
+        rgba(0, 0, 0, 0.62) 60px,
+        rgba(0, 0, 0, 0.90) 84px,
+        black 98px,
+        black 100%
+      ) !important;
+    -webkit-mask-image:
+      linear-gradient(
+        to bottom,
+        transparent 0,
+        rgba(0, 0, 0, 0.08) 14px,
+        rgba(0, 0, 0, 0.28) 34px,
+        rgba(0, 0, 0, 0.62) 60px,
+        rgba(0, 0, 0, 0.90) 84px,
+        black 98px,
+        black 100%
+      ) !important;
+
+    pointer-events: none !important;
+    z-index: -1 !important;
+  }
+
+  html.dark #thread-bottom-container::before {
+    display: none !important;
+  }
+
+  /*
+   * Home splash:
+   * The centered composer has no conversation content behind it. Disable the
+   * raised bottom fade while a splash headline is present so the fade does
+   * not overlap the greeting above the composer.
+   */
+  html.dark #thread:has([data-splash-headline-option])
+    #thread-bottom-container::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* 7. Conversation surfaces */
+  html.dark [data-message-author-role="user"]
+    .user-message-bubble-color {
+    background-color: var(--sg-user-bubble) !important;
+    border-color: var(--sg-border-surface) !important;
+    border-radius: 22px 8px 22px 22px !important;
+  }
+
+  html.dark [data-message-author-role="user"]
+    .group\/message-image {
+    background-color: transparent !important;
+  }
+
+  html.dark :is(article, section)
+    [class~="bg-token-main-surface-secondary"] {
+    background-color: var(--sg-content) !important;
+  }
+
+  /* 8. Cards, code, tables, and quotations */
+  html.dark :is(
+    button,
+    [role="button"],
+    a
+  ).interactive-bg-secondary {
+    background-color: var(--sg-control-surface) !important;
+    color: var(--sg-text) !important;
+    border-color: var(--sg-border-surface) !important;
+    overflow: hidden !important;
+  }
+
+  html.dark :is(
+    button,
+    [role="button"],
+    a
+  ).interactive-bg-secondary:hover {
+    background-color: var(--sg-control-hover) !important;
+    border-color: var(--sg-border-strong) !important;
+  }
+
+  html.dark :is(
+    button,
+    [role="button"],
+    a
+  ).interactive-bg-secondary :is(code, pre) {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  html.dark [class~="bg-(--code-block-surface)"] {
+    background-color: var(--sg-code) !important;
+  }
+
+  html.dark [class~="bg-(--code-block-surface)"][class~="overflow-clip"] {
+    border-radius: 24px !important;
+    overflow: clip !important;
+  }
+
+  html.dark :is(.markdown, .prose) :is(p, li, td, th, blockquote) > code {
+    background-color: var(--sg-inline-code) !important;
+    color: var(--sg-inline-code-text) !important;
+    border: 1px solid var(--sg-border-surface);
+    border-radius: 4px;
+  }
+
+  html.dark table {
+    border-color: var(--sg-border-surface) !important;
+  }
+
+  html.dark th {
+    background-color: var(--sg-card) !important;
+  }
+
+  html.dark :is(td, th) {
+    border-color: var(--sg-border-surface) !important;
+  }
+
+  html.dark blockquote {
+    border-inline-start-color: var(--sg-accent) !important;
+    color: var(--sg-text-secondary) !important;
+  }
+
+  /* 9. Work task panel */
+  html.dark #page-header aside:has(button.group\/section-toggle) {
+    background-color: var(--sg-work-panel) !important;
+    border-color: var(--sg-border-surface) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header aside:has(button.group\/section-toggle)
+    :is(ul > li > button, ul > li > a, a[role="link"]) {
+    background-color: transparent !important;
+    color: var(--sg-text) !important;
+    border: 1px solid transparent !important;
+    border-radius: 10px !important;
+  }
+
+  /*
+   * Progress, output, and source rows are passive while idle. Hover and
+   * keyboard focus expose only the structural border so the panel does not
+   * become a stack of filled cards.
+   */
+  html.dark #page-header aside:has(button.group\/section-toggle)
+    :is(ul > li > button, ul > li > a, a[role="link"]):is(
+      :hover,
+      :focus-visible
+    ) {
+    background-color: transparent !important;
+    border-color: var(--sg-border-surface) !important;
+  }
+
+  html.dark #page-header aside:has(button.group\/section-toggle)
+    :is(ul > li > button, ul > li > a, a[role="link"]):is(
+      [aria-selected="true"],
+      [aria-current="true"],
+      [data-state="active"]
+    ) {
+    background-color: var(--sg-active) !important;
+    border-color: var(--sg-border-strong) !important;
+  }
+
+  html.dark #page-header aside:has(button.group\/section-toggle)
+    section + section {
+    border-top-color: var(--sg-border-structural) !important;
+  }
+
+  html.dark #page-header aside:has(button.group\/section-toggle) hr {
+    border-color: var(--sg-border-structural) !important;
+    opacity: 0.7;
+  }
+
+  /*
+   * Section toggles are labels while idle. Excluding the panel from generic
+   * header rules removes the former need for dummy-ID specificity boosting.
+   */
+  html.dark #page-header aside:has(button.group\/section-toggle)
+    button.group\/section-toggle {
+    background-color: transparent !important;
+    color: var(--sg-text-secondary) !important;
+    border: 0 !important;
+    outline: 0 !important;
+    border-radius: 8px !important;
+    padding-inline: 8px !important;
+  }
+
+  html.dark #page-header aside:has(button.group\/section-toggle)
+    button.group\/section-toggle:is(:hover, :focus-visible) {
+    background-color: var(--sg-control-surface) !important;
+    color: var(--sg-text) !important;
+    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
+  }
+
+  /* 10. Dialogs and tooltips */
+  html.dark [role="dialog"] {
+    background-color: var(--sg-panel) !important;
+    border-color: var(--sg-border-surface) !important;
+    box-shadow:
+      0 18px 48px rgba(0, 0, 0, 0.32),
+      0 0 0 1px var(--sg-border-surface) !important;
+  }
+
+  /*
+   * The token class is the painted tooltip surface. Elements carrying only
+   * role="tooltip" are positioning wrappers and remain paint-free.
+   */
+  html.dark [class~="bg-token-bg-tooltip"] {
+    background-color: var(--sg-tooltip) !important;
+    color: var(--sg-text) !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-border-surface),
+      0 6px 18px rgba(0, 0, 0, 0.28) !important;
+    overflow: hidden !important;
+  }
+
+  html.dark [role="tooltip"]:not([class~="bg-token-bg-tooltip"]) {
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  /* 11. Radix menus and model selector */
+  html.dark :is(
+    [role="menu"],
+    [role="listbox"],
+    [data-radix-menu-content],
+    [data-radix-select-content]
+  ) {
+    background-color: var(--sg-popover) !important;
+    border: 0 !important;
+    outline: 0 !important;
+  }
+
+  html.dark :is(
+    [role="menuitem"],
+    [role="menuitemradio"],
+    [role="menuitemcheckbox"],
+    [role="option"]
+  ) {
+    background-color: transparent !important;
+    border-radius: 10px !important;
+  }
+
+  html.dark :is(
+    [role="menuitem"],
+    [role="menuitemradio"],
+    [role="menuitemcheckbox"],
+    [role="option"]
+  ):is(
+    :hover,
+    :focus-visible,
+    [data-highlighted]
+  ) {
+    background-color: var(--sg-hover-overlay) !important;
+  }
+
+  html.dark :is(
+    [role="menuitem"],
+    [role="menuitemradio"],
+    [role="menuitemcheckbox"],
+    [role="option"]
+  ):is(
+    [aria-selected="true"],
+    [aria-checked="true"],
+    [data-state="checked"]
+  ) {
+    background-color: var(--sg-selected-overlay) !important;
+  }
+
+  html.dark :is(
+    [role="menuitemradio"],
+    [role="menuitemcheckbox"]
+  ) {
+    overflow: hidden !important;
+  }
+
+  html.dark :is(
+    [role="menu"][data-radix-menu-content],
+    [role="listbox"][data-radix-select-content]
+  ) {
+    isolation: isolate !important;
+    background-clip: padding-box !important;
+    clip-path: inset(0 round 16px) !important;
+    -webkit-clip-path: inset(0 round 16px) !important;
+    overflow-y: auto !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-border-surface) !important;
+  }
+
+  html.dark :is(
+    [role="menu"][data-radix-menu-content],
+    [role="listbox"][data-radix-select-content]
+  )::before,
+  html.dark :is(
+    [role="menu"][data-radix-menu-content],
+    [role="listbox"][data-radix-select-content]
+  )::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  html.dark
+    [data-radix-popper-content-wrapper]:has(
+      > [role="menu"][data-radix-menu-content]
+    ),
+  html.dark
+    [data-radix-popper-content-wrapper]:has(
+      > [role="listbox"][data-radix-select-content]
+    ) {
+    filter:
+      drop-shadow(0 18px 24px rgba(0, 0, 0, 0.28)) !important;
+  }
+
+  /*
+   * 12. Scrollbars
+   *
+   * Scope the theme to verified or semantically identifiable scroll owners.
+   * This replaces the former `html.dark *` rules that matched every element.
+   */
+  html.dark,
+  html.dark body,
+  html.dark :is(
+    [data-scroll-root],
+    #stage-slideover-sidebar nav,
+    #page-header aside:has(button.group\/section-toggle) > div,
+    #page-header aside:has(button.group\/section-toggle) [role="region"],
+    [data-settings-tab-list],
+    [role="tabpanel"],
+    [role="menu"],
+    [role="listbox"],
+    #modal-settings > div > div,
+    #code-block-viewer > div,
+    pre,
+    textarea,
+    [contenteditable="true"],
+    .overflow-auto,
+    .overflow-x-auto,
+    .overflow-y-auto
+  ) {
+    scrollbar-color: var(--sg-scrollbar) transparent;
+  }
+
+  html.dark::-webkit-scrollbar,
+  html.dark body::-webkit-scrollbar,
+  html.dark :is(
+    [data-scroll-root],
+    #stage-slideover-sidebar nav,
+    #page-header aside:has(button.group\/section-toggle) > div,
+    #page-header aside:has(button.group\/section-toggle) [role="region"],
+    [data-settings-tab-list],
+    [role="tabpanel"],
+    [role="menu"],
+    [role="listbox"],
+    #modal-settings > div > div,
+    #code-block-viewer > div,
+    pre,
+    textarea,
+    [contenteditable="true"],
+    .overflow-auto,
+    .overflow-x-auto,
+    .overflow-y-auto
+  )::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+
+  html.dark::-webkit-scrollbar-track,
+  html.dark body::-webkit-scrollbar-track,
+  html.dark :is(
+    [data-scroll-root],
+    #stage-slideover-sidebar nav,
+    #page-header aside:has(button.group\/section-toggle) > div,
+    #page-header aside:has(button.group\/section-toggle) [role="region"],
+    [data-settings-tab-list],
+    [role="tabpanel"],
+    [role="menu"],
+    [role="listbox"],
+    #modal-settings > div > div,
+    #code-block-viewer > div,
+    pre,
+    textarea,
+    [contenteditable="true"],
+    .overflow-auto,
+    .overflow-x-auto,
+    .overflow-y-auto
+  )::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  html.dark::-webkit-scrollbar-thumb,
+  html.dark body::-webkit-scrollbar-thumb,
+  html.dark :is(
+    [data-scroll-root],
+    #stage-slideover-sidebar nav,
+    #page-header aside:has(button.group\/section-toggle) > div,
+    #page-header aside:has(button.group\/section-toggle) [role="region"],
+    [data-settings-tab-list],
+    [role="tabpanel"],
+    [role="menu"],
+    [role="listbox"],
+    #modal-settings > div > div,
+    #code-block-viewer > div,
+    pre,
+    textarea,
+    [contenteditable="true"],
+    .overflow-auto,
+    .overflow-x-auto,
+    .overflow-y-auto
+  )::-webkit-scrollbar-thumb {
+    background-color: var(--sg-scrollbar);
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background-clip: padding-box;
+  }
+
+  html.dark::-webkit-scrollbar-thumb:hover,
+  html.dark body::-webkit-scrollbar-thumb:hover,
+  html.dark :is(
+    [data-scroll-root],
+    #stage-slideover-sidebar nav,
+    #page-header aside:has(button.group\/section-toggle) > div,
+    #page-header aside:has(button.group\/section-toggle) [role="region"],
+    [data-settings-tab-list],
+    [role="tabpanel"],
+    [role="menu"],
+    [role="listbox"],
+    #modal-settings > div > div,
+    #code-block-viewer > div,
+    pre,
+    textarea,
+    [contenteditable="true"],
+    .overflow-auto,
+    .overflow-x-auto,
+    .overflow-y-auto
+  )::-webkit-scrollbar-thumb:hover {
+    background-color: var(--sg-scrollbar-hover);
+  }
+  /*
+   * GPT discovery search input cascade fallback:
+   * Probe v3 confirmed that this input is the paint owner and that replacing
+   * background-color alone changes the native black fill to the control token.
+   *
+   * Keep this rule last so it wins the native `bg-token-main-surface-primary!`
+   * utility without changing the surrounding border or focus treatment.
+   */
+  html.dark body #main
+    input#search#search[role="combobox"][class~="bg-token-main-surface-primary!"] {
+    background-color: var(--sg-control-surface) !important;
+  }
+
+}

@@ -4,11 +4,11 @@ Unofficial Stylus/UserCSS themes for ChatGPT.
 
 ## Stable release
 
-The `main` branch preserves **ChatGPT Soft Graphite v1.0.16** as the current
+The `main` branch preserves **ChatGPT Soft Graphite v1.0.17** as the current
 stable release.
 
-- Stable CSS: `releases/v1.0.16/chatgpt-soft-graphite.user.css`
-- Stable tag: `v1.0.16`
+- Stable CSS: `releases/v1.0.17/chatgpt-soft-graphite.user.css`
+- Stable tag: `v1.0.17`
 
 ## Development lines
 
@@ -23,7 +23,7 @@ is currently paused.
 - `main`: published and visually confirmed stable releases only
 - `feature/standard-graphite`: standalone Standard Graphite development
 - `feature/dual-graphite-palettes`: retained, currently paused
-- tags: immutable published versions such as `v1.0.16`
+- tags: immutable published versions such as `v1.0.17`
 
 Do not create a new branch for every patch version. Use commits and release
 tags to separate versions.
