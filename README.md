@@ -2,6 +2,8 @@
 
 Unofficial Stylus/UserCSS themes for ChatGPT.
 
+![ChatGPT Soft Graphite preview](previews/chatgpt-soft-graphite-preview.webp)
+
 ## Install Soft Graphite
 
 Install the current stable UserCSS directly from GitHub:
@@ -21,6 +23,7 @@ stable release.
 - Stable CSS: `releases/v1.0.17/chatgpt-soft-graphite.user.css`
 - Canonical install CSS: `chatgpt-soft-graphite.user.css`
 - Stable tag: `v1.0.17`
+- Preview: `previews/chatgpt-soft-graphite-preview.webp`
 - UserStyles.world note: `docs/USERSTYLES_WORLD_NOTE.md`
 
 ## Development lines

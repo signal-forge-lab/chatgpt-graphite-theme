@@ -26,3 +26,7 @@ those options are available.
 
 The GitHub Raw installation remains usable even when UserStyles.world is not
 available.
+
+The canonical listing preview is stored at
+`previews/chatgpt-soft-graphite-preview.webp`. Use the same image when updating
+the UserStyles.world listing so the GitHub and mirror presentation stay aligned.
