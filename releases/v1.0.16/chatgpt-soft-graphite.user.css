@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.17-beta.1
+@version        1.0.17-beta.2
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -65,7 +65,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.17-beta.1";
+    --sg-active-build: "1.0.17-beta.2";
 
     color-scheme: dark;
 
@@ -109,6 +109,10 @@
     --default-theme-user-msg-text: var(--sg-text) !important;
     --black-theme-user-msg-bg: var(--sg-user-bubble) !important;
     --black-theme-user-msg-text: var(--sg-text) !important;
+    --default-theme-submit-btn-bg: var(--sg-active) !important;
+    --default-theme-submit-btn-text: var(--sg-text) !important;
+    --black-theme-submit-btn-bg: var(--sg-active) !important;
+    --black-theme-submit-btn-text: var(--sg-text) !important;
     --default-theme-user-selection-bg: var(--sg-selection) !important;
     --black-theme-user-selection-bg: var(--sg-selection) !important;
 
@@ -469,6 +473,15 @@
   html.dark #prompt-textarea[data-placeholder]::before,
   html.dark #prompt-textarea p.is-editor-empty:first-child::before {
     color: var(--sg-text-tertiary) !important;
+  }
+
+  /*
+   * Keep the enabled composer submit action inside the Soft Graphite palette.
+   * Native hover, pressed, and disabled opacity behavior remains unchanged.
+   */
+  html.dark button.composer-submit-button-color:not(:disabled) {
+    background-color: var(--sg-active) !important;
+    color: var(--sg-text) !important;
   }
 
   html.dark #thread-bottom-container
