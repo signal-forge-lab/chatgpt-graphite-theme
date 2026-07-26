@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.16
+@version        1.0.17-beta.1
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -35,6 +35,10 @@
     --sg-control-hover: #363636;
     --sg-hover-overlay: rgba(255, 255, 255, 0.07);
     --sg-selected-overlay: rgba(255, 255, 255, 0.10);
+    --sg-header-control-hover: rgba(255, 255, 255, 0.055);
+    --sg-header-control-focus: rgba(255, 255, 255, 0.075);
+    --sg-header-control-pressed: rgba(255, 255, 255, 0.035);
+    --sg-header-control-border: rgba(255, 255, 255, 0.12);
     --sg-sidebar-selected: #2b2d2f;
     --sg-active: #424241;
     --sg-border-structural: #2a2c2e;
@@ -61,7 +65,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.16";
+    --sg-active-build: "1.0.17-beta.1";
 
     color-scheme: dark;
 
@@ -235,8 +239,10 @@
   }
 
   /*
-   * Header controls are flat while idle. Task-panel controls are excluded
-   * because aria-expanded there describes section structure, not selection.
+   * Header Control Style is intentionally limited to the page header. Idle
+   * controls remain transparent, hover adds only a faint tonal surface, and
+   * keyboard focus/open states use a neutral outline without accent color.
+   * Task-panel controls and the Chat/Work segmented switch remain excluded.
    */
   html.dark #page-header
     :is(a, button, [role="button"]):not(
@@ -246,7 +252,9 @@
     ):not(
       #conversation-header-actions > div > span > button
     ) {
+    background-color: transparent !important;
     color: var(--sg-text) !important;
+    box-shadow: none !important;
   }
 
   html.dark #page-header
@@ -256,10 +264,10 @@
       [role="radio"][data-radix-collection-item]
     ):not(
       #conversation-header-actions > div > span > button
-    ):is(:hover, :focus-visible) {
-    background-color: var(--sg-control-surface) !important;
+    ):hover {
+    background-color: var(--sg-header-control-hover) !important;
     color: var(--sg-text) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
+    box-shadow: none !important;
   }
 
   html.dark #page-header
@@ -269,9 +277,28 @@
       [role="radio"][data-radix-collection-item]
     ):not(
       #conversation-header-actions > div > span > button
-    ):is([data-state="open"], [aria-expanded="true"]) {
-    background-color: var(--sg-active) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border-strong) !important;
+    ):active {
+    background-color: var(--sg-header-control-pressed) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header
+    :is(a, button, [role="button"]):not(
+      aside:has(button.group\/section-toggle) *
+    ):not(
+      [role="radio"][data-radix-collection-item]
+    ):not(
+      #conversation-header-actions > div > span > button
+    ):is(
+      :focus-visible,
+      [data-state="open"],
+      [aria-expanded="true"]
+    ) {
+    background-color: var(--sg-header-control-focus) !important;
+    color: var(--sg-text) !important;
+    outline: none !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-header-control-border) !important;
   }
 
   /*
@@ -315,9 +342,11 @@
   html.dark #page-header
     [role="group"]:has(button[role="radio"][data-radix-collection-item])
     button[role="radio"]:focus-visible {
-    background-color: var(--sg-control-surface) !important;
+    background-color: var(--sg-header-control-focus) !important;
     color: var(--sg-text) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
+    outline: none !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-header-control-border) !important;
   }
 
   /*
@@ -327,13 +356,22 @@
    */
   html.dark #page-header
     #conversation-header-actions > div > span > button:hover {
-    background-color: var(--sg-hover-overlay) !important;
+    background-color: var(--sg-header-control-hover) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header
+    #conversation-header-actions > div > span > button:active {
+    background-color: var(--sg-header-control-pressed) !important;
+    box-shadow: none !important;
   }
 
   html.dark #page-header
     #conversation-header-actions > div > span > button:focus-visible {
-    background-color: var(--sg-control-surface) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
+    background-color: var(--sg-header-control-focus) !important;
+    outline: none !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-header-control-border) !important;
   }
 
   /*
@@ -356,10 +394,21 @@
     background-color: transparent !important;
   }
 
-  html.dark #page-header
-    a[href*="/g/g-p-"]:is(:hover, :focus-visible) {
-    background-color: var(--sg-control-surface) !important;
-    box-shadow: inset 0 0 0 1px var(--sg-border-surface) !important;
+  html.dark #page-header a[href*="/g/g-p-"]:hover {
+    background-color: var(--sg-header-control-hover) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header a[href*="/g/g-p-"]:active {
+    background-color: var(--sg-header-control-pressed) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #page-header a[href*="/g/g-p-"]:focus-visible {
+    background-color: var(--sg-header-control-focus) !important;
+    outline: none !important;
+    box-shadow:
+      inset 0 0 0 1px var(--sg-header-control-border) !important;
   }
 
   /* 5. Sidebar */
