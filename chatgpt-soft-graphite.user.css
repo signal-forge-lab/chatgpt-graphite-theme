@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.18-beta.1
+@version        1.0.18-beta.2
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -69,7 +69,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.18-beta.1";
+    --sg-active-build: "1.0.18-beta.2";
 
     color-scheme: dark;
 
@@ -477,6 +477,21 @@
   html.dark #prompt-textarea[data-placeholder]::before,
   html.dark #prompt-textarea p.is-editor-empty:first-child::before {
     color: var(--sg-text-tertiary) !important;
+  }
+
+  /*
+   * Current disclaimer paint owner:
+   * ChatGPT adds an opaque main-surface fill and an 8px masking shadow to the
+   * select-none pill inside the semantic thread disclaimer container. Those
+   * native effects become visible as a dark band against the graphite canvas.
+   * Remove only the fill and shadow while preserving native spacing, type,
+   * selection behavior, and centering.
+   */
+  html.dark [data-testid="thread-disclaimer"]
+    div.select-none[class~="bg-token-main-surface-primary"] {
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
   }
 
   /*
