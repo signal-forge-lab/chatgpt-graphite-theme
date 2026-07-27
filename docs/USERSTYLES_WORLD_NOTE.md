@@ -39,6 +39,10 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.18
+
+* Fixed the footer disclaimer appearing as a dark band while preserving its native spacing, typography, and alignment.
+
 #### v1.0.17
 
 * Added flat, low-contrast interaction states for header actions, including hover, focus, open, and pressed states.
