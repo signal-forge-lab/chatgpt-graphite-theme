@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.19
+
+- Refined the enabled Composer send and stop actions with a light graphite surface, dark glyph, and flat hover and pressed states.
+- Restyled the Activity flyout surfaces and matched its tool-result cards to the code-block background without changing native geometry or syntax colors.
+
 ## v1.0.18
 
 - Fixed the footer disclaimer appearing as a dark band by targeting its current semantic container and removing only the obsolete fill and masking shadow.

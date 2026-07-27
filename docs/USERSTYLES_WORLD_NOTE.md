@@ -39,6 +39,11 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.19
+
+* Refined the enabled composer send and stop actions with a light graphite surface and dark center glyph.
+* Restyled the Activity flyout and matched its tool-result cards to the code-block background.
+
 #### v1.0.18
 
 * Fixed the footer disclaimer appearing as a dark band while preserving its native spacing, typography, and alignment.
