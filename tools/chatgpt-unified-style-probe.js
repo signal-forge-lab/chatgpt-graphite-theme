@@ -1,5 +1,5 @@
 /*
- * ChatGPT Unified Style Probe v2.0.2
+ * ChatGPT Unified Style Probe v2.0.3
  *
  * One-file DevTools Snippet. It starts automatic collection immediately,
  * captures visible and interactive ChatGPT UI, includes Activity flyout and
@@ -932,7 +932,7 @@
   }
 
   buildRuleIndex();
-  createPanel();
+  // The base collector runs headlessly. Unified UI is created once below.
   document.addEventListener('pointermove', onDocumentPointerMove, true);
   document.addEventListener('keydown', onKeyDown, true);
 
@@ -1754,7 +1754,7 @@
 
   reset();
   base.rebuildRuleIndex();
-  createPanel();
+  // The integrated collector runs headlessly. Unified UI is created once below.
   document.addEventListener('pointermove', onPointerMove, true);
   document.addEventListener('pointerdown', onPointerDown, true);
   document.addEventListener('click', onClick, true);
@@ -1785,11 +1785,11 @@
 (() => {
   'use strict';
 
-  const VERSION = '2.0.2';
+  const VERSION = '2.0.3';
   const BASE_KEY = '__chatgptOriginalStyleProbe';
   const INTEGRATED_KEY = '__chatgptOriginalStyleIntegratedProbe';
   const UNIFIED_KEY = '__chatgptUnifiedStyleProbe';
-  const PANEL_SELECTOR = '[data-chatgpt-original-style-integrated-probe="panel"]';
+  const PANEL_SELECTOR = '[data-chatgpt-unified-style-probe="panel"]';
   const LEGACY_PANEL_SELECTOR = [
     '[data-chatgpt-unified-style-probe="panel"]',
     '[data-chatgpt-original-style-probe="panel"]',
@@ -1803,8 +1803,8 @@
 
   const base = window[BASE_KEY];
   const integrated = window[INTEGRATED_KEY];
-  const panel = document.querySelector(PANEL_SELECTOR);
-  if (!base?.capture || !base?.exportPayload || !integrated?.state || !panel) {
+  let panel = null;
+  if (!base?.capture || !base?.exportPayload || !integrated?.state) {
     console.error('[Unified Style Probe] Base probe initialization failed.');
     return;
   }
@@ -2296,16 +2296,31 @@
     font: '12px/1.2 system-ui, sans-serif',
   });
 
-  const patchPanel = () => {
+  const createUnifiedPanel = () => {
     document.querySelectorAll(LEGACY_PANEL_SELECTOR).forEach((element) => {
-      if (element !== panel) element.remove();
+      element.remove();
     });
-    panel.setAttribute('data-chatgpt-unified-style-probe', 'panel');
 
-    const title = panel.querySelector('strong');
-    const guide = title?.nextElementSibling;
-    const controls = [...panel.children].find((element) => element.querySelector?.('button'));
-    if (!title || !guide || !controls) return;
+    panel = document.createElement('section');
+    panel.setAttribute('data-chatgpt-unified-style-probe', 'panel');
+    panel.setAttribute('data-chatgpt-original-style-integrated-probe', 'panel');
+    panel.setAttribute('data-chatgpt-original-style-probe', 'panel');
+    Object.assign(panel.style, {
+      position: 'fixed',
+      right: '14px',
+      bottom: '14px',
+      zIndex: '2147483647',
+      width: '420px',
+      maxHeight: '70vh',
+      overflow: 'auto',
+      padding: '12px',
+      border: '1px solid #586574',
+      borderRadius: '12px',
+      background: '#15191f',
+      color: '#eef1f5',
+      boxShadow: '0 18px 48px rgba(0, 0, 0, .42)',
+      font: '12px/1.45 system-ui, sans-serif',
+    });
 
     const header = document.createElement('div');
     Object.assign(header.style, {
@@ -2320,17 +2335,19 @@
       userSelect: 'none',
       touchAction: 'none',
     });
+    const title = document.createElement('strong');
     title.textContent = `Unified Style Probe v${VERSION}`;
     title.style.margin = '0';
     const dragHint = document.createElement('span');
     dragHint.textContent = 'ドラッグで移動';
     Object.assign(dragHint.style, { color: '#788493', fontSize: '10px', fontWeight: '400' });
-    title.replaceWith(header);
     header.append(title, dragHint);
     header.addEventListener('pointerdown', startDrag);
     state.header = header;
 
+    const guide = document.createElement('div');
     guide.textContent = '起動直後から自動収集します。対象UIを表示・操作したあと、JSONを保存してください。';
+    Object.assign(guide.style, { color: '#b8c2ce', marginBottom: '8px' });
 
     const appearance = base.exportPayload().session.appearance;
     const environment = document.createElement('div');
@@ -2342,62 +2359,92 @@
       color: appearance.customThemeDetected ? '#ffb4a8' : '#9aa6b4',
       fontSize: '11px',
     });
-    guide.insertAdjacentElement('afterend', environment);
     state.environment = environment;
 
-    const buttons = [...controls.querySelectorAll('button')];
-    const scanButton = buttons.find((button) => button.textContent === 'Scan now');
-    const watchButton = buttons.find((button) => button.textContent.startsWith('State watch'));
-    const downloadButton = buttons.find((button) => button.textContent === 'Download JSON');
-    const clearButton = buttons.find((button) => button.textContent === 'Clear');
-    const closeButton = buttons.find((button) => button.textContent === 'Close');
+    const controls = document.createElement('div');
+    Object.assign(controls.style, {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '6px',
+      marginBottom: '8px',
+    });
 
-    if (scanButton) {
-      scanButton.textContent = '再スキャン';
-      scanButton.addEventListener('click', () => scheduleScan(20));
-    }
-    if (watchButton) {
+    const makeButton = (label, handler) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = label;
+      buttonStyle(button);
+      button.addEventListener('click', handler);
+      return button;
+    };
+
+    const scanButton = makeButton('再スキャン', () => scheduleScan(20));
+    const watchButton = makeButton('自動収集: ON', () => {
+      if (state.previewMode) restorePreview({ silent: true });
+      integrated.state.watching = !integrated.state.watching;
       updateWatchLabel();
-      watchButton.addEventListener('click', () => window.setTimeout(updateWatchLabel));
-    }
-    if (clearButton) clearButton.textContent = 'クリア';
+      renderStatus(`自動収集を${integrated.state.watching ? '開始' : '停止'}しました。`);
+      if (integrated.state.watching) scheduleScan(20);
+    });
+    const downloadButton = makeButton('JSON保存', download);
+    const clearButton = makeButton('クリア', () => {
+      integrated.reset?.();
+      state.lastSignatures.clear();
+      renderStatus('収集結果をクリアしました。');
+      scheduleScan(20);
+    });
 
-    if (downloadButton) {
-      const replacement = downloadButton.cloneNode(true);
-      replacement.textContent = 'JSON保存';
-      replacement.addEventListener('click', download);
-      downloadButton.replaceWith(replacement);
-    }
-
-    const previewButton = document.createElement('button');
-    previewButton.type = 'button';
-    previewButton.textContent = 'Soft Graphiteプレビュー';
-    buttonStyle(previewButton);
-    previewButton.addEventListener('click', applyPreview);
-    controls.append(previewButton);
+    const previewButton = makeButton('Soft Graphiteプレビュー', applyPreview);
     state.previewButton = previewButton;
 
-    const restoreButton = document.createElement('button');
-    restoreButton.type = 'button';
-    restoreButton.textContent = 'プレビュー解除';
-    buttonStyle(restoreButton);
-    restoreButton.addEventListener('click', () => restorePreview());
-    controls.append(restoreButton);
+    const restoreButton = makeButton('プレビュー解除', () => restorePreview());
     state.restoreButton = restoreButton;
 
-    if (closeButton) {
-      const replacement = closeButton.cloneNode(true);
-      replacement.textContent = '閉じる';
-      replacement.addEventListener('click', () => {
-        destroy({ removePanel: false });
-        integrated.destroy?.();
-        base.destroy?.();
-      });
-      closeButton.replaceWith(replacement);
-    }
+    const closeButton = makeButton('閉じる', () => {
+      destroy();
+      integrated.destroy?.();
+      base.destroy?.();
+    });
 
-    const shortcuts = panel.lastElementChild;
-    if (shortcuts) shortcuts.textContent = '基本操作: 起動 → UIを表示・操作 → JSON保存';
+    controls.append(
+      scanButton,
+      watchButton,
+      downloadButton,
+      clearButton,
+      previewButton,
+      restoreButton,
+      closeButton,
+    );
+
+    const status = document.createElement('div');
+    Object.assign(status.style, {
+      minHeight: '22px',
+      color: '#aeb8c4',
+      marginBottom: '6px',
+    });
+    integrated.state.status = status;
+
+    const checklist = document.createElement('div');
+    Object.assign(checklist.style, {
+      color: '#8793a2',
+      fontSize: '11px',
+      overflowWrap: 'anywhere',
+    });
+    integrated.state.checklist = checklist;
+
+    const shortcuts = document.createElement('div');
+    shortcuts.textContent = '基本操作: 起動 → UIを表示・操作 → JSON保存';
+    Object.assign(shortcuts.style, {
+      marginTop: '7px',
+      color: '#788493',
+      fontSize: '11px',
+    });
+
+    panel.append(header, guide, environment, controls, status, checklist, shortcuts);
+    panel.addEventListener('pointerdown', (event) => event.stopPropagation());
+    panel.addEventListener('click', (event) => event.stopPropagation());
+    document.documentElement.append(panel);
+    updateWatchLabel();
   };
 
   const onActivityMutation = () => scheduleScan(70);
@@ -2422,11 +2469,11 @@
     document.removeEventListener('focusin', onInteraction, true);
     document.removeEventListener('scroll', onViewportChange, true);
     window.removeEventListener('resize', onViewportChange);
-    if (removePanel) panel.remove();
+    if (removePanel) panel?.remove();
     if (window[UNIFIED_KEY]) delete window[UNIFIED_KEY];
   }
 
-  patchPanel();
+  createUnifiedPanel();
   integrated.version = VERSION;
   integrated.download = download;
   integrated.applyPreview = applyPreview;
