@@ -1,5 +1,5 @@
 /*
- * ChatGPT Unified Style Probe v2.0.1
+ * ChatGPT Unified Style Probe v2.0.2
  *
  * One-file DevTools Snippet. It starts automatic collection immediately,
  * captures visible and interactive ChatGPT UI, includes Activity flyout and
@@ -7,6 +7,29 @@
  *
  * Run with third-party UserCSS disabled when collecting default styles.
  */
+
+(() => {
+  'use strict';
+
+  for (const key of [
+    '__chatgptUnifiedStyleProbe',
+    '__chatgptOriginalStyleIntegratedProbe',
+    '__chatgptOriginalStyleProbe',
+  ]) {
+    try {
+      window[key]?.destroy?.();
+    } catch {}
+  }
+
+  document.querySelectorAll([
+    '[data-chatgpt-unified-style-probe="panel"]',
+    '[data-chatgpt-original-style-integrated-probe="panel"]',
+    '[data-chatgpt-original-style-probe="panel"]',
+    '#sg-composer-action-preview-probe',
+    '#sg-tool-surface-parent-probe',
+    '#sg-tool-surface-frame-probe',
+  ].join(',')).forEach((element) => element.remove());
+})();
 
 (() => {
   'use strict';
@@ -792,6 +815,7 @@
     panel = document.createElement('section');
     panel.setAttribute(ROOT_ATTRIBUTE, 'panel');
     Object.assign(panel.style, {
+      display: 'none',
       position: 'fixed',
       right: '14px',
       bottom: '14px',
@@ -1617,6 +1641,10 @@
   }
 
   function createPanel() {
+    document
+      .querySelectorAll(`[${ROOT_ATTRIBUTE}="panel"]`)
+      .forEach((element) => element.remove());
+
     state.basePanel = document.querySelector(`[${BASE_ROOT_ATTRIBUTE}="panel"]`);
     if (state.basePanel) {
       state.basePanelDisplay = state.basePanel.style.display;
@@ -1757,11 +1785,18 @@
 (() => {
   'use strict';
 
-  const VERSION = '2.0.1';
+  const VERSION = '2.0.2';
   const BASE_KEY = '__chatgptOriginalStyleProbe';
   const INTEGRATED_KEY = '__chatgptOriginalStyleIntegratedProbe';
   const UNIFIED_KEY = '__chatgptUnifiedStyleProbe';
   const PANEL_SELECTOR = '[data-chatgpt-original-style-integrated-probe="panel"]';
+  const LEGACY_PANEL_SELECTOR = [
+    '[data-chatgpt-unified-style-probe="panel"]',
+    '[data-chatgpt-original-style-probe="panel"]',
+    '#sg-composer-action-preview-probe',
+    '#sg-tool-surface-parent-probe',
+    '#sg-tool-surface-frame-probe',
+  ].join(',');
   const PREVIEW_ID = 'chatgpt-unified-style-probe-preview';
 
   window[UNIFIED_KEY]?.destroy?.();
@@ -2262,6 +2297,11 @@
   });
 
   const patchPanel = () => {
+    document.querySelectorAll(LEGACY_PANEL_SELECTOR).forEach((element) => {
+      if (element !== panel) element.remove();
+    });
+    panel.setAttribute('data-chatgpt-unified-style-probe', 'panel');
+
     const title = panel.querySelector('strong');
     const guide = title?.nextElementSibling;
     const controls = [...panel.children].find((element) => element.querySelector?.('button'));

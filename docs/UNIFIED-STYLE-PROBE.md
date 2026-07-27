@@ -6,10 +6,13 @@ Canonical probe:
 tools/chatgpt-unified-style-probe.js
 ```
 
-Current internal version: `2.0.1`
+Current internal version: `2.0.2`
 
 This single DevTools Snippet replaces the former base probe, gap probe, and
 integrated-probe builder. No separate source-order or build step is required.
+Only one visible probe window is created. The former base and integrated
+engines run without their own visible panels, and rerunning the probe removes
+legacy or temporary probe windows before creating the unified panel.
 
 ## Basic workflow
 
