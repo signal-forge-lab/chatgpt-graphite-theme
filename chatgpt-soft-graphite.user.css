@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.18
+@version        1.0.19-beta.1
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -45,6 +45,11 @@
     --sg-header-control-border: rgba(255, 255, 255, 0.12);
     --sg-sidebar-selected: #2b2d2f;
     --sg-active: #424241;
+    --sg-primary-action-surface: #d9dce0;
+    --sg-primary-action-surface-hover: #e2e5e8;
+    --sg-primary-action-surface-pressed: #c9cdd1;
+    --sg-primary-action-icon: #242627;
+    --sg-primary-action-icon-strong: #1e1f20;
     --sg-border-structural: #2a2c2e;
     --sg-border-surface: rgba(255, 255, 255, 0.06);
     --sg-border-strong: #4b4b49;
@@ -69,7 +74,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.18";
+    --sg-active-build: "1.0.19-beta.1";
 
     color-scheme: dark;
 
@@ -113,10 +118,10 @@
     --default-theme-user-msg-text: var(--sg-text) !important;
     --black-theme-user-msg-bg: var(--sg-user-bubble) !important;
     --black-theme-user-msg-text: var(--sg-text) !important;
-    --default-theme-submit-btn-bg: var(--sg-active) !important;
-    --default-theme-submit-btn-text: var(--sg-text) !important;
-    --black-theme-submit-btn-bg: var(--sg-active) !important;
-    --black-theme-submit-btn-text: var(--sg-text) !important;
+    --default-theme-submit-btn-bg: var(--sg-primary-action-surface) !important;
+    --default-theme-submit-btn-text: var(--sg-primary-action-icon) !important;
+    --black-theme-submit-btn-bg: var(--sg-primary-action-surface) !important;
+    --black-theme-submit-btn-text: var(--sg-primary-action-icon) !important;
     --default-theme-user-selection-bg: var(--sg-selection) !important;
     --black-theme-user-selection-bg: var(--sg-selection) !important;
 
@@ -495,12 +500,24 @@
   }
 
   /*
-   * Keep the enabled composer submit action inside the Soft Graphite palette.
-   * Native hover, pressed, and disabled opacity behavior remains unchanged.
+   * Primary composer actions use a light graphite surface with a dark glyph.
+   * This preserves the native light-outside/dark-inside hierarchy without the
+   * stark white surface. Disabled opacity remains native.
    */
   html.dark button.composer-submit-button-color:not(:disabled) {
-    background-color: var(--sg-active) !important;
-    color: var(--sg-text) !important;
+    background-color: var(--sg-primary-action-surface) !important;
+    color: var(--sg-primary-action-icon) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark button.composer-submit-button-color:not(:disabled):hover {
+    background-color: var(--sg-primary-action-surface-hover) !important;
+    color: var(--sg-primary-action-icon-strong) !important;
+  }
+
+  html.dark button.composer-submit-button-color:not(:disabled):active {
+    background-color: var(--sg-primary-action-surface-pressed) !important;
+    color: var(--sg-primary-action-icon-strong) !important;
   }
 
   /*
