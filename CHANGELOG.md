@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.18
+
+- Fixed the footer disclaimer appearing as a dark band by targeting its current semantic container and removing only the obsolete fill and masking shadow.
+
 ## v1.0.17
 
 - Added a flat, low-contrast Header Control Style for header actions, using neutral hover, focus, open, and pressed states.
