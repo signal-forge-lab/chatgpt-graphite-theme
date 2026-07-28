@@ -2,7 +2,7 @@
 
 ## v1.0.20
 
-- Removed the transient blue focus line shown inside the Composer while ChatGPT completes its initial render.
+- Removed the transient blue line produced when ChatGPT briefly focuses its fallback Composer textarea during initial rendering.
 
 ## v1.0.19
 

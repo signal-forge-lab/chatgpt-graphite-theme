@@ -185,12 +185,15 @@
   }
 
   /*
-   * ChatGPT briefly exposes the prompt editor's native focus outline during
-   * initial hydration. The composer already provides its own structural
-   * border, so suppress only that transient editor outline.
+   * ChatGPT briefly focuses a fallback textarea before replacing it with the
+   * ProseMirror editor. The fallback is clipped by the composer and its focus
+   * ring appears as a blue line along the top edge. Suppress focus paint only
+   * for textarea editors inside the composer; the normal prompt editor is a
+   * contenteditable div and keeps its native focus behavior.
    */
-  html.dark #prompt-textarea:focus-visible {
+  html.dark form.group\/composer textarea:is(:focus, :focus-visible) {
     outline: none !important;
+    box-shadow: none !important;
   }
 
   /* 3. Route-specific surfaces */
