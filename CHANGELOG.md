@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.20
+
+- Removed the transient blue focus line shown inside the Composer while ChatGPT completes its initial render.
+
 ## v1.0.19
 
 - Refined the enabled Composer send and stop actions with a light graphite surface, dark glyph, and flat hover and pressed states.

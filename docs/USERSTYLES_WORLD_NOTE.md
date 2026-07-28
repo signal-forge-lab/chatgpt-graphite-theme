@@ -5,10 +5,10 @@ A refined, unofficial dark theme for ChatGPT built around a calm, low-contrast S
 ### Features
 
 * Supports regular ChatGPT conversations, Projects, Work, and Library
-* Restyles the composer, send button, and user message bubbles
+* Restyles the composer, primary actions, and user message bubbles
 * Refines header actions with flat, low-contrast interaction states
 * Refines menus, tooltips, model selectors, and content surfaces
-* Restyles code blocks and inline code
+* Restyles code blocks, inline code, and Activity tool-result cards
 * Supports the Chat / Work segmented control
 * Supports temporary chat controls
 * Highlights the currently selected conversation in the sidebar
@@ -38,6 +38,10 @@ ChatGPT may change its interface or DOM structure without notice.
 Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
+
+#### v1.0.20
+
+* Removed the transient blue focus line shown inside the composer while ChatGPT completes its initial render.
 
 #### v1.0.19
 
