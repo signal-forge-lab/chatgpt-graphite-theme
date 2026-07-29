@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.21
+
+- Restyled the Sources footnote control and removed the redundant native fill behind its nested icon container.
+
 ## v1.0.20
 
 - Removed the transient blue line produced when ChatGPT briefly focuses its fallback Composer textarea during initial rendering.

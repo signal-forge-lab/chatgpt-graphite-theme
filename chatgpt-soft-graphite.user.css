@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.20
+@version        1.0.21
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -74,7 +74,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.20";
+    --sg-active-build: "1.0.21";
 
     color-scheme: dark;
 
@@ -539,6 +539,34 @@
     div.select-none[class~="bg-token-main-surface-primary"] {
     background-color: transparent !important;
     background-image: none !important;
+    box-shadow: none !important;
+  }
+
+  /*
+   * Sources footnote control:
+   * The current source button and its nested icon container each paint a
+   * main-surface background. Style the button as a normal graphite control
+   * and remove the redundant inner fill so no native black square remains.
+   */
+  html.dark button[class~="group/footnote"] {
+    background-color: var(--sg-control-surface) !important;
+    background-image: none !important;
+    border-color: var(--sg-border-structural) !important;
+    color: var(--sg-text-secondary) !important;
+    box-shadow: none !important;
+  }
+
+  html.dark button[class~="group/footnote"]:hover {
+    background-color: var(--sg-control-hover) !important;
+    border-color: var(--sg-border-strong) !important;
+    color: var(--sg-text) !important;
+  }
+
+  html.dark button[class~="group/footnote"]
+    div[class~="bg-token-main-surface-primary"] {
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: transparent !important;
     box-shadow: none !important;
   }
 
