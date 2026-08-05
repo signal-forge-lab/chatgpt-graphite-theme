@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.21
+@version        1.0.22
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -74,7 +74,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.21";
+    --sg-active-build: "1.0.22";
 
     color-scheme: dark;
 
@@ -592,14 +592,13 @@
   }
 
   /*
-   * Confirmed stacking fix:
-   * isolate the negative-z fade inside the bottom container and make the
-   * entire composer zone opaque, so conversation content cannot show through
-   * behind the composer.
+   * Bottom fade stacking:
+   * isolate the negative-z fade inside the bottom container while keeping the
+   * container itself transparent. The rounded composer remains opaque, but
+   * conversation content can remain visible around its outer corners.
    */
   html.dark #thread-bottom-container {
     isolation: isolate !important;
-    background-color: var(--sg-canvas) !important;
   }
 
   html.dark #thread-bottom-container::after {

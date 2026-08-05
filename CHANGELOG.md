@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.22
+
+- Restored conversation content around the composer’s rounded outer corners by removing the opaque bottom-container background while preserving the existing fade.
+
 ## v1.0.21
 
 - Restyled the Sources footnote control and removed the redundant native fill behind its nested icon container.
