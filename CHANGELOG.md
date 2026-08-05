@@ -3,6 +3,7 @@
 ## v1.0.22
 
 - Restored conversation content around the composer’s rounded outer corners by removing the opaque bottom-container background while preserving the existing fade.
+- Extended and reshaped the bottom fade so conversation content remains visible around the composer and disappears smoothly shortly before its lower edge.
 
 ## v1.0.21
 

@@ -627,35 +627,36 @@
 
     /*
      * Smooth bottom fade:
-     * Keep the existing 98px transition length and 16px lower offset, while
-     * approximating a soft ease-in-out curve with small opacity increments.
+     * Start at 16px and extend the transition through the composer area so
+     * conversation content disappears shortly before the composer bottom.
      */
+    opacity: 1 !important;
     mask-image:
       linear-gradient(
         to bottom,
         transparent 16px,
-        rgba(0, 0, 0, 0.01) 34px,
-        rgba(0, 0, 0, 0.04) 48px,
-        rgba(0, 0, 0, 0.12) 60px,
-        rgba(0, 0, 0, 0.28) 72px,
-        rgba(0, 0, 0, 0.52) 84px,
-        rgba(0, 0, 0, 0.76) 96px,
-        rgba(0, 0, 0, 0.94) 106px,
-        black 114px,
+        rgba(0, 0, 0, 0.126) 54.6px,
+        rgba(0, 0, 0, 0.235) 84.6px,
+        rgba(0, 0, 0, 0.385) 110.3px,
+        rgba(0, 0, 0, 0.564) 136px,
+        rgba(0, 0, 0, 0.745) 161.7px,
+        rgba(0, 0, 0, 0.884) 187.4px,
+        rgba(0, 0, 0, 0.973) 208.9px,
+        black 226px,
         black 100%
       ) !important;
     -webkit-mask-image:
       linear-gradient(
         to bottom,
         transparent 16px,
-        rgba(0, 0, 0, 0.01) 34px,
-        rgba(0, 0, 0, 0.04) 48px,
-        rgba(0, 0, 0, 0.12) 60px,
-        rgba(0, 0, 0, 0.28) 72px,
-        rgba(0, 0, 0, 0.52) 84px,
-        rgba(0, 0, 0, 0.76) 96px,
-        rgba(0, 0, 0, 0.94) 106px,
-        black 114px,
+        rgba(0, 0, 0, 0.126) 54.6px,
+        rgba(0, 0, 0, 0.235) 84.6px,
+        rgba(0, 0, 0, 0.385) 110.3px,
+        rgba(0, 0, 0, 0.564) 136px,
+        rgba(0, 0, 0, 0.745) 161.7px,
+        rgba(0, 0, 0, 0.884) 187.4px,
+        rgba(0, 0, 0, 0.973) 208.9px,
+        black 226px,
         black 100%
       ) !important;
 
