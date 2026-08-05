@@ -39,6 +39,11 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.21
+
+* Restyled the Sources footnote control and removed the redundant dark fill behind its nested icon.
+* Smoothed the fade above the composer to reduce visible stepping and added a subtle blur for a softer transition.
+
 #### v1.0.20
 
 * Removed the transient blue line produced when ChatGPT briefly focuses its fallback composer textarea during initial rendering.
