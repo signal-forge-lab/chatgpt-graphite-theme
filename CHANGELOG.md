@@ -3,6 +3,7 @@
 ## v1.0.21
 
 - Restyled the Sources footnote control and removed the redundant native fill behind its nested icon container.
+- Smoothed and lowered the bottom fade without changing its transition length, and added a subtle blur to soften visible text bands.
 
 ## v1.0.20
 

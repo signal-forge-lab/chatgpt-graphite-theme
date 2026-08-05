@@ -627,32 +627,41 @@
     background-color: var(--sg-canvas) !important;
 
     /*
-     * Extended bottom fade:
-     * The transition begins 16px higher while still reaching full opacity
-     * 50px above the bottom container.
+     * Smooth bottom fade:
+     * Keep the existing 98px transition length and 16px lower offset, while
+     * approximating a soft ease-in-out curve with small opacity increments.
      */
     mask-image:
       linear-gradient(
         to bottom,
-        transparent 0,
-        rgba(0, 0, 0, 0.08) 14px,
-        rgba(0, 0, 0, 0.28) 34px,
-        rgba(0, 0, 0, 0.62) 60px,
-        rgba(0, 0, 0, 0.90) 84px,
-        black 98px,
+        transparent 16px,
+        rgba(0, 0, 0, 0.01) 34px,
+        rgba(0, 0, 0, 0.04) 48px,
+        rgba(0, 0, 0, 0.12) 60px,
+        rgba(0, 0, 0, 0.28) 72px,
+        rgba(0, 0, 0, 0.52) 84px,
+        rgba(0, 0, 0, 0.76) 96px,
+        rgba(0, 0, 0, 0.94) 106px,
+        black 114px,
         black 100%
       ) !important;
     -webkit-mask-image:
       linear-gradient(
         to bottom,
-        transparent 0,
-        rgba(0, 0, 0, 0.08) 14px,
-        rgba(0, 0, 0, 0.28) 34px,
-        rgba(0, 0, 0, 0.62) 60px,
-        rgba(0, 0, 0, 0.90) 84px,
-        black 98px,
+        transparent 16px,
+        rgba(0, 0, 0, 0.01) 34px,
+        rgba(0, 0, 0, 0.04) 48px,
+        rgba(0, 0, 0, 0.12) 60px,
+        rgba(0, 0, 0, 0.28) 72px,
+        rgba(0, 0, 0, 0.52) 84px,
+        rgba(0, 0, 0, 0.76) 96px,
+        rgba(0, 0, 0, 0.94) 106px,
+        black 114px,
         black 100%
       ) !important;
+
+    backdrop-filter: blur(1.25px) !important;
+    -webkit-backdrop-filter: blur(1.25px) !important;
 
     pointer-events: none !important;
     z-index: -1 !important;
