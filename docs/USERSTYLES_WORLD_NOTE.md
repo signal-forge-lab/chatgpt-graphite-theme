@@ -39,6 +39,12 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.23
+
+* Restored the Soft Graphite canvas color behind Home prompt suggestions after ChatGPT changed their spacing utility classes.
+* Restored the Soft Graphite canvas color on the Scheduled page’s sticky header.
+* Restored readable contrast for file-card icons using the runtime-verified SVG repaint path.
+
 #### v1.0.22
 
 * Restored conversation content around the composer’s rounded outer corners by keeping the bottom container transparent.
