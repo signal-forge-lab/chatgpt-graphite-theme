@@ -4,6 +4,7 @@
 
 - Restored the Soft Graphite canvas color behind Composer suggestion lists after ChatGPT changed their spacing utility classes.
 - Restored the Soft Graphite canvas color on the Scheduled page’s sticky header.
+- Restored readable contrast for file-card icons using the SVG repaint path verified by the runtime proof probe.
 
 ## v1.0.22
 

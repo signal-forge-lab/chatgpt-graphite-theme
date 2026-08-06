@@ -581,6 +581,18 @@
   }
 
   /*
+   * File card icon:
+   * The proof probe confirmed that this structural selector reaches the
+   * visible SVG and that an SVG-level filter changes the rendered sprite.
+   * Recolor only the leading icon; file-name and metadata colors stay native.
+   */
+  html.dark div[class~="group/artifact-row"]
+    > button[class~="group/open-file"]
+    > svg {
+    filter: brightness(0) invert(68%) !important;
+  }
+
+  /*
    * Primary composer actions use a light graphite surface with a dark glyph.
    * This preserves the native light-outside/dark-inside hierarchy without the
    * stark white surface. Disabled opacity remains native.
