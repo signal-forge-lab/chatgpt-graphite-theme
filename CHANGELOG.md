@@ -3,6 +3,7 @@
 ## v1.0.23
 
 - Restored the Soft Graphite canvas color behind Composer suggestion lists after ChatGPT changed their spacing utility classes.
+- Restored the Soft Graphite canvas color on the Scheduled page’s sticky header.
 
 ## v1.0.22
 

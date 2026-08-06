@@ -254,6 +254,16 @@
   }
 
   /*
+   * Scheduled page header:
+   * The current route uses a sticky utility-class header instead of
+   * #page-header, and its native surface remains pure black.
+   */
+  html.dark main.bg-primary
+    > header.h-header-height.bg-surface-primary.sticky {
+    background-color: var(--sg-canvas) !important;
+  }
+
+  /*
    * GPT discovery header:
    * This route no longer uses #page-header. Scope the standard header surface
    * to the header containing the stable create-GPT action.
