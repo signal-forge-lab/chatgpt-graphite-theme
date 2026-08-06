@@ -39,6 +39,11 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.22
+
+* Restored conversation content around the composer’s rounded outer corners by keeping the bottom container transparent.
+* Extended and reshaped the bottom fade so conversation content remains visible around the composer and disappears smoothly shortly before its lower edge.
+
 #### v1.0.21
 
 * Restyled the Sources footnote control and removed the redundant dark fill behind its nested icon.

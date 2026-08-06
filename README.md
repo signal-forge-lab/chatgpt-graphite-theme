@@ -17,12 +17,12 @@ root file and increment `@version` before it is pushed.
 
 ## Stable release
 
-The `main` branch preserves **ChatGPT Soft Graphite v1.0.21** as the current
+The `main` branch preserves **ChatGPT Soft Graphite v1.0.22** as the current
 stable release.
 
-- Stable CSS: `releases/v1.0.21/chatgpt-soft-graphite.user.css`
+- Stable CSS: `releases/v1.0.22/chatgpt-soft-graphite.user.css`
 - Canonical install CSS: `chatgpt-soft-graphite.user.css`
-- Stable tag: `v1.0.21`
+- Stable tag: `v1.0.22`
 - Preview: `previews/chatgpt-soft-graphite-preview.webp`
 - UserStyles.world note: `docs/USERSTYLES_WORLD_NOTE.md`
 
@@ -39,7 +39,7 @@ is currently paused.
 - `main`: published and visually confirmed stable releases only
 - `feature/standard-graphite`: standalone Standard Graphite development
 - `feature/dual-graphite-palettes`: retained, currently paused
-- tags: immutable published versions such as `v1.0.21`
+- tags: immutable published versions such as `v1.0.22`
 
 Do not create a new branch for every patch version. Use commits and release
 tags to separate versions.
