@@ -39,6 +39,10 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.24
+
+* Fixed the black corners around Workspace tool-result cards by clipping their sandbox iframes to the cards’ rounded shape.
+
 #### v1.0.23
 
 * Restored the Soft Graphite canvas color behind Home prompt suggestions after ChatGPT changed their spacing utility classes.
@@ -47,13 +51,12 @@ Some elements may require updates after a ChatGPT interface change.
 
 #### v1.0.22
 
-* Restored conversation content around the composer’s rounded outer corners by keeping the bottom container transparent.
+* Fixed conversation content being hidden outside the composer’s rounded corners by restoring the transparent bottom container.
 * Extended and reshaped the bottom fade so conversation content remains visible around the composer and disappears smoothly shortly before its lower edge.
 
 #### v1.0.21
 
-* Restyled the Sources footnote control and removed the redundant dark fill behind its nested icon.
-* Smoothed the fade above the composer to reduce visible stepping and added a subtle blur for a softer transition.
+* Restyled the Sources footnote control and refined the fade above the composer for a smoother, less visibly stepped transition.
 
 #### v1.0.20
 
