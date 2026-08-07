@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.24
+
+- Clipped Workspace app iframes to their rounded card shape so the sandbox document’s rectangular black corners no longer show through.
+
 ## v1.0.23
 
 - Restored the Soft Graphite canvas color behind Composer suggestion lists after ChatGPT changed their spacing utility classes.

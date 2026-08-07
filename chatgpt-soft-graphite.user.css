@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.23
+@version        1.0.24
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -74,7 +74,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.23";
+    --sg-active-build: "1.0.24";
 
     color-scheme: dark;
 
@@ -227,6 +227,17 @@
     background-color: var(--sg-code) !important;
     background-image: none !important;
     box-shadow: none !important;
+  }
+
+  /*
+   * Workspace app iframe:
+   * The sandbox document paints a rectangular black background behind its
+   * rounded card. Clip the iframe itself so those outer corners do not show;
+   * cross-origin content inside the iframe remains untouched.
+   */
+  html.dark iframe[title="ui://devspace/workspace-app.html"] {
+    border-radius: 12px !important;
+    overflow: hidden !important;
   }
 
   /*
