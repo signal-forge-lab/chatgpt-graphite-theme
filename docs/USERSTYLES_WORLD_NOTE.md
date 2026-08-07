@@ -39,6 +39,11 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.25
+
+* Replaced the bright accent-colored quote marker with a neutral graphite border color so quoted text blends with the theme more naturally.
+* Removed the extra rectangular fill behind the new formatting toolbar menu while preserving its rounded outer popover and item states.
+
 #### v1.0.24
 
 * Fixed the black corners around Workspace tool-result cards by clipping their sandbox iframes to the cards’ rounded shape.
