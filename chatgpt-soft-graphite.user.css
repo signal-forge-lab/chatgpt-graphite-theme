@@ -878,6 +878,16 @@
   }
 
   /*
+   * Formatting toolbar popover:
+   * The outer dialog already owns the rounded surface. Keep its nested menu
+   * paint-free so a second rectangular popover fill does not show through.
+   */
+  html.dark [role="dialog"][data-toolbar-surface="true"]
+    > [role="menu"] {
+    background-color: transparent !important;
+  }
+
+  /*
    * The token class is the painted tooltip surface. Elements carrying only
    * role="tooltip" are positioning wrappers and remain paint-free.
    */
