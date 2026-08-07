@@ -1,0 +1,1 @@
+f28db1c851ee0748c38e0ae23c041f67cc011ccb2ba9b16c642aa2f06f878cc6  chatgpt-soft-graphite.user.css
