@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.25
+
+- Replaced the bright accent-colored quote marker with a neutral graphite border color so quoted text blends with the theme more naturally.
+
 ## v1.0.24
 
 - Clipped Workspace app iframes to their rounded card shape so the sandbox document’s rectangular black corners no longer show through.
