@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.26
+
+- Restored Soft Graphite surfaces across GPT discovery and GPT editor controls that had fallen back to native black after new surface utilities were introduced.
+- Added a visual fallback for native `!` surface utilities whose background color can outrank userstyle declarations.
+
 ## v1.0.25
 
 - Replaced the bright accent-colored quote marker with a neutral graphite border color so quoted text blends with the theme more naturally.

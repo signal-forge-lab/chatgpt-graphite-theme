@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.25
+@version        1.0.26
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -74,7 +74,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.25";
+    --sg-active-build: "1.0.26";
 
     color-scheme: dark;
 
@@ -241,15 +241,23 @@
   }
 
   /*
-   * Project and Library directory toolbar:
+   * Project, Library, and Sites directory toolbar:
    * The outer shell and the current inner top-controls surface can each own
    * the toolbar fill. Paint both so route-specific native black does not show
-   * through when ChatGPT moves the background to the inner control row.
+   * through when ChatGPT moves the background to the inner control row. The
+   * solid gradient is a visual fallback for new `!` surface utilities that can
+   * outrank a userstyle background-color declaration in the cascade.
    */
   html.dark [data-testid="page-table-toolbar-shell"],
   html.dark [data-testid="page-table-toolbar-shell"]
-    [data-testid="artifacts-surface-top-controls"] {
+    [data-testid="artifacts-surface-top-controls"],
+  html.dark [data-testid="page-table-toolbar-shell"]
+    [data-testid="sites-toolbar"] {
     background-color: var(--sg-canvas) !important;
+    background-image: linear-gradient(
+      var(--sg-canvas),
+      var(--sg-canvas)
+    ) !important;
   }
 
   /*
@@ -286,6 +294,38 @@
     box-shadow: none !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  /* GPT cards and editor preview avatar surfaces. */
+  html.dark .gizmo-shadow-stroke.bg-token-main-surface-primary {
+    background-color: var(--sg-control-surface) !important;
+    background-image: linear-gradient(
+      var(--sg-control-surface),
+      var(--sg-control-surface)
+    ) !important;
+  }
+
+  /*
+   * GPT editor form controls use the native primary-surface token directly.
+   * Keep their native focus and select-arrow treatment while replacing only
+   * the control fill.
+   */
+  html.dark body:has(
+    button[data-testid="gizmo-editor-configure-button"]
+  ) :is(input, textarea, select)[class~="bg-token-main-surface-primary"] {
+    background-color: var(--sg-control-surface) !important;
+  }
+
+  /* Selected Configure/Create segment in the GPT editor. */
+  html.dark
+    [role="radiogroup"]:has(
+      button[data-testid="gizmo-editor-configure-button"]
+    ) > button[data-state="checked"] {
+    background-color: var(--sg-active) !important;
+    background-image: linear-gradient(
+      var(--sg-active),
+      var(--sg-active)
+    ) !important;
   }
 
   /*
@@ -877,6 +917,17 @@
       0 0 0 1px var(--sg-border-surface) !important;
   }
 
+  /* Native `!` primary-surface dialogs can outrank background-color alone. */
+  html.dark body:has(
+    #main input#search[role="combobox"]
+  ) [role="dialog"][class~="bg-token-main-surface-primary!"] {
+    background-color: var(--sg-panel) !important;
+    background-image: linear-gradient(
+      var(--sg-panel),
+      var(--sg-panel)
+    ) !important;
+  }
+
   /*
    * Formatting toolbar popover:
    * The outer dialog already owns the rounded surface. Keep its nested menu
@@ -1136,6 +1187,10 @@
   html.dark body #main
     input#search#search[role="combobox"][class~="bg-token-main-surface-primary!"] {
     background-color: var(--sg-control-surface) !important;
+    background-image: linear-gradient(
+      var(--sg-control-surface),
+      var(--sg-control-surface)
+    ) !important;
   }
 
 }
