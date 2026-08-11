@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.26
+@version        1.0.27-rc.1
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -30,7 +30,7 @@
     --sg-content: #2d3030;
     --sg-control-surface: #2d3031;
     --sg-editor-control-surface: #36393a;
-    --sg-editor-active: #474a49;
+    --sg-editor-active: var(--sg-canvas);
     --sg-user-bubble: var(--sg-control-surface);
     --sg-composer: var(--sg-control-surface);
     --sg-composer-solid: rgba(45, 48, 49, 0.98);
@@ -76,7 +76,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.26";
+    --sg-active-build: "1.0.27-rc.1";
 
     color-scheme: dark;
 
