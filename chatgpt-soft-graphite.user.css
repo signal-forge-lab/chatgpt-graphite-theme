@@ -29,6 +29,8 @@
     --sg-canvas: #1e1f20;
     --sg-content: #2d3030;
     --sg-control-surface: #2d3031;
+    --sg-editor-control-surface: #36393a;
+    --sg-editor-active: #474a49;
     --sg-user-bubble: var(--sg-control-surface);
     --sg-composer: var(--sg-control-surface);
     --sg-composer-solid: rgba(45, 48, 49, 0.98);
@@ -309,7 +311,23 @@
   html.dark body:has(
     button[data-testid="gizmo-editor-configure-button"]
   ) :is(input, textarea, select)[class~="bg-token-main-surface-primary"] {
-    background-color: var(--sg-control-surface) !important;
+    background-color: var(--sg-editor-control-surface) !important;
+  }
+
+  html.dark body:has(
+    button[data-testid="gizmo-editor-configure-button"]
+  ) :is(input, textarea, select)[class~="bg-token-main-surface-primary"]:not(
+    :focus,
+    :focus-visible
+  ) {
+    border-color: var(--sg-border-strong) !important;
+  }
+
+  html.dark body:has(
+    button[data-testid="gizmo-editor-configure-button"]
+  ) :is(input, textarea)::placeholder {
+    color: var(--sg-text-secondary) !important;
+    opacity: 1 !important;
   }
 
   /* Selected Configure/Create segment in the GPT editor. */
@@ -317,7 +335,7 @@
     [role="radiogroup"]:has(
       button[data-testid="gizmo-editor-configure-button"]
     ) > button[data-state="checked"] {
-    background-color: var(--sg-active) !important;
+    background-color: var(--sg-editor-active) !important;
   }
 
   /*

@@ -4,6 +4,7 @@
 
 - Restored Soft Graphite surfaces across GPT discovery and GPT editor controls that had fallen back to native black after new surface utilities were introduced.
 - Added a visual fallback for native `!` surface utilities whose background color can outrank userstyle declarations.
+- Increased GPT Editor form contrast with a slightly raised control surface, clearer idle borders and placeholders, and a stronger selected editor tab.
 - Scoped menu, listbox, and item interaction styling to actual Radix popup surfaces so unrelated ARIA options no longer inherit popup states.
 - Consolidated shared page-header interaction states and removed header divider lines without changing native control geometry.
 
