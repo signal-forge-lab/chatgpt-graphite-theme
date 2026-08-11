@@ -39,6 +39,13 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.26
+
+* Restored Soft Graphite surfaces across GPT discovery and GPT editor controls after ChatGPT introduced new surface utilities.
+* Improved GPT Editor contrast with a slightly raised control surface, clearer idle borders and placeholders, and a stronger selected editor tab.
+* Scoped menu, listbox, and item interaction styling to actual Radix popup surfaces so unrelated ARIA options no longer inherit popup states.
+* Consolidated shared header interaction states and removed header divider lines while preserving native control geometry.
+
 #### v1.0.25
 
 * Replaced the bright accent-colored quote marker with a neutral graphite border color so quoted text blends with the theme more naturally.
