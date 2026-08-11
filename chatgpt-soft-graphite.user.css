@@ -290,7 +290,7 @@
   html.dark
     header:has(a[data-testid="create-gpt-discovery-button"]) {
     background-color: var(--sg-canvas) !important;
-    border-bottom: 1px solid var(--sg-border-structural) !important;
+    border-bottom: 0 !important;
     box-shadow: none !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -299,10 +299,6 @@
   /* GPT cards and editor preview avatar surfaces. */
   html.dark .gizmo-shadow-stroke.bg-token-main-surface-primary {
     background-color: var(--sg-control-surface) !important;
-    background-image: linear-gradient(
-      var(--sg-control-surface),
-      var(--sg-control-surface)
-    ) !important;
   }
 
   /*
@@ -322,10 +318,6 @@
       button[data-testid="gizmo-editor-configure-button"]
     ) > button[data-state="checked"] {
     background-color: var(--sg-active) !important;
-    background-image: linear-gradient(
-      var(--sg-active),
-      var(--sg-active)
-    ) !important;
   }
 
   /*
@@ -347,9 +339,7 @@
   /* 4. Sticky page header */
   html.dark #page-header {
     background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    border-bottom: 1px solid var(--sg-border-structural) !important;
+    border-bottom: 0 !important;
     box-shadow: none !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -366,8 +356,6 @@
       aside:has(button.group\/section-toggle) *
     ):not(
       [role="radio"][data-radix-collection-item]
-    ):not(
-      #conversation-header-actions > div > span > button
     ) {
     background-color: transparent !important;
     color: var(--sg-text) !important;
@@ -379,8 +367,6 @@
       aside:has(button.group\/section-toggle) *
     ):not(
       [role="radio"][data-radix-collection-item]
-    ):not(
-      #conversation-header-actions > div > span > button
     ):hover {
     background-color: var(--sg-header-control-hover) !important;
     color: var(--sg-text) !important;
@@ -392,8 +378,6 @@
       aside:has(button.group\/section-toggle) *
     ):not(
       [role="radio"][data-radix-collection-item]
-    ):not(
-      #conversation-header-actions > div > span > button
     ):active {
     background-color: var(--sg-header-control-pressed) !important;
     box-shadow: none !important;
@@ -404,8 +388,6 @@
       aside:has(button.group\/section-toggle) *
     ):not(
       [role="radio"][data-radix-collection-item]
-    ):not(
-      #conversation-header-actions > div > span > button
     ):is(
       :focus-visible,
       [data-state="open"],
@@ -467,31 +449,6 @@
   }
 
   /*
-   * The temporary-chat action is a circular 36px button. Its translucent
-   * wrapper is layout-only; otherwise the wrapper's 8px black surface remains
-   * visible behind the circular interaction state.
-   */
-  html.dark #page-header
-    #conversation-header-actions > div > span > button:hover {
-    background-color: var(--sg-header-control-hover) !important;
-    box-shadow: none !important;
-  }
-
-  html.dark #page-header
-    #conversation-header-actions > div > span > button:active {
-    background-color: var(--sg-header-control-pressed) !important;
-    box-shadow: none !important;
-  }
-
-  html.dark #page-header
-    #conversation-header-actions > div > span > button:focus-visible {
-    background-color: var(--sg-header-control-focus) !important;
-    outline: none !important;
-    box-shadow:
-      inset 0 0 0 1px var(--sg-header-control-border) !important;
-  }
-
-  /*
    * Probe-confirmed paint owner:
    * ChatGPT's .translucent-surface applies the black group background to
    * #conversation-header-actions. Only that background color is overridden.
@@ -509,23 +466,6 @@
   html.dark #page-header
     .translucent-surface:has(a[href*="/g/g-p-"]) {
     background-color: transparent !important;
-  }
-
-  html.dark #page-header a[href*="/g/g-p-"]:hover {
-    background-color: var(--sg-header-control-hover) !important;
-    box-shadow: none !important;
-  }
-
-  html.dark #page-header a[href*="/g/g-p-"]:active {
-    background-color: var(--sg-header-control-pressed) !important;
-    box-shadow: none !important;
-  }
-
-  html.dark #page-header a[href*="/g/g-p-"]:focus-visible {
-    background-color: var(--sg-header-control-focus) !important;
-    outline: none !important;
-    box-shadow:
-      inset 0 0 0 1px var(--sg-header-control-border) !important;
   }
 
   /* 5. Sidebar */
@@ -929,16 +869,6 @@
   }
 
   /*
-   * Formatting toolbar popover:
-   * The outer dialog already owns the rounded surface. Keep its nested menu
-   * paint-free so a second rectangular popover fill does not show through.
-   */
-  html.dark [role="dialog"][data-toolbar-surface="true"]
-    > [role="menu"] {
-    background-color: transparent !important;
-  }
-
-  /*
    * The token class is the painted tooltip surface. Elements carrying only
    * role="tooltip" are positioning wrappers and remain paint-free.
    */
@@ -962,63 +892,12 @@
 
   /* 11. Radix menus and model selector */
   html.dark :is(
-    [role="menu"],
-    [role="listbox"],
-    [data-radix-menu-content],
-    [data-radix-select-content]
+    [role="menu"][data-radix-menu-content],
+    [role="listbox"][data-radix-select-content]
   ) {
     background-color: var(--sg-popover) !important;
     border: 0 !important;
     outline: 0 !important;
-  }
-
-  html.dark :is(
-    [role="menuitem"],
-    [role="menuitemradio"],
-    [role="menuitemcheckbox"],
-    [role="option"]
-  ) {
-    background-color: transparent !important;
-    border-radius: 10px !important;
-  }
-
-  html.dark :is(
-    [role="menuitem"],
-    [role="menuitemradio"],
-    [role="menuitemcheckbox"],
-    [role="option"]
-  ):is(
-    :hover,
-    :focus-visible,
-    [data-highlighted]
-  ) {
-    background-color: var(--sg-hover-overlay) !important;
-  }
-
-  html.dark :is(
-    [role="menuitem"],
-    [role="menuitemradio"],
-    [role="menuitemcheckbox"],
-    [role="option"]
-  ):is(
-    [aria-selected="true"],
-    [aria-checked="true"],
-    [data-state="checked"]
-  ) {
-    background-color: var(--sg-selected-overlay) !important;
-  }
-
-  html.dark :is(
-    [role="menuitemradio"],
-    [role="menuitemcheckbox"]
-  ) {
-    overflow: hidden !important;
-  }
-
-  html.dark :is(
-    [role="menu"][data-radix-menu-content],
-    [role="listbox"][data-radix-select-content]
-  ) {
     isolation: isolate !important;
     background-clip: padding-box !important;
     clip-path: inset(0 round 16px) !important;
@@ -1026,6 +905,61 @@
     overflow-y: auto !important;
     box-shadow:
       inset 0 0 0 1px var(--sg-border-surface) !important;
+  }
+
+  html.dark :is(
+    [role="menu"][data-radix-menu-content],
+    [role="listbox"][data-radix-select-content]
+  ) :is(
+      [role="menuitem"],
+      [role="menuitemradio"],
+      [role="menuitemcheckbox"],
+      [role="option"]
+    ) {
+    background-color: transparent !important;
+    border-radius: 10px !important;
+  }
+
+  html.dark :is(
+    [role="menu"][data-radix-menu-content],
+    [role="listbox"][data-radix-select-content]
+  ) :is(
+      [role="menuitem"],
+      [role="menuitemradio"],
+      [role="menuitemcheckbox"],
+      [role="option"]
+    ):is(
+      :hover,
+      :focus-visible,
+      [data-highlighted]
+    ) {
+    background-color: var(--sg-hover-overlay) !important;
+  }
+
+  html.dark :is(
+    [role="menu"][data-radix-menu-content],
+    [role="listbox"][data-radix-select-content]
+  ) :is(
+      [role="menuitem"],
+      [role="menuitemradio"],
+      [role="menuitemcheckbox"],
+      [role="option"]
+    ):is(
+      [aria-selected="true"],
+      [aria-checked="true"],
+      [data-state="checked"]
+    ) {
+    background-color: var(--sg-selected-overlay) !important;
+  }
+
+  html.dark :is(
+    [role="menu"][data-radix-menu-content],
+    [role="listbox"][data-radix-select-content]
+  ) :is(
+      [role="menuitemradio"],
+      [role="menuitemcheckbox"]
+    ) {
+    overflow: hidden !important;
   }
 
   html.dark :is(

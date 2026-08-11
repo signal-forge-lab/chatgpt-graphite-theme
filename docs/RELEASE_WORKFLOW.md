@@ -8,9 +8,10 @@ update source for Stylus.
 1. Update the CSS and increment its `@version` value.
 2. Copy the final CSS to `chatgpt-soft-graphite.user.css`.
 3. Archive the same release under `releases/vX.Y.Z/`.
-4. Update `SHA256SUMS.txt`, `README.md`, and `CHANGELOG.md`.
-5. Commit and push `main`, then create and push the matching immutable tag.
-6. Verify that the GitHub Raw URL returns the new UserCSS metadata and version.
+4. Verify the candidate in ChatGPT and run any probe required by the changed surfaces.
+5. Update `releases/vX.Y.Z/SHA256SUMS.txt`, `README.md`, and `CHANGELOG.md`.
+6. Commit and push `main`, then create and push the matching immutable tag.
+7. Verify that the GitHub Raw URL returns the new UserCSS metadata and version.
 
 Canonical Raw URL:
 
