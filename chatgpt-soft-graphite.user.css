@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Soft Graphite
 @namespace      meio-dia.chatgpt-soft-graphite
-@version        1.0.27-rc.1
+@version        1.0.27-rc.2
 @description    Unofficial Soft Graphite dark theme for ChatGPT with refined chat, Project, Work, menu, tooltip, and composer surfaces.
 @author         meio-dia
 @license        MIT
@@ -76,7 +76,7 @@
     --sg-work-panel: var(--sg-panel);
     --sg-scrollbar: #47494b;
     --sg-scrollbar-hover: #5c5f62;
-    --sg-active-build: "1.0.27-rc.1";
+    --sg-active-build: "1.0.27-rc.2";
 
     color-scheme: dark;
 
@@ -135,6 +135,17 @@
 
     --icon-accent: var(--sg-accent) !important;
     --composer-blue-text: var(--sg-accent) !important;
+  }
+
+  /*
+   * ChatGPT re-scopes this token across every dark subtree, so an html-only
+   * override can be shadowed back to native black on route content. Mirror the
+   * native dark scope for this one token so derived surfaces and fades keep
+   * using the Soft Graphite canvas without duplicating route-specific fixes.
+   */
+  html.dark,
+  html.dark :not(:where(.light, .light *)) {
+    --main-surface-primary: var(--sg-canvas) !important;
   }
 
   /* 2. Canvas and typography */
@@ -445,19 +456,19 @@
    * state; paint interaction feedback on the actual radio surface.
    */
   html.dark #page-header
-    [role="group"]:has(button[role="radio"][data-radix-collection-item])
+    [role="radiogroup"]:has(button[role="radio"][data-radix-collection-item])
     button[role="radio"][aria-checked="true"] {
     color: var(--sg-text) !important;
   }
 
   html.dark #page-header
-    [role="group"]:has(button[role="radio"][data-radix-collection-item])
+    [role="radiogroup"]:has(button[role="radio"][data-radix-collection-item])
     button[role="radio"][aria-checked="false"] {
     color: var(--sg-text-secondary) !important;
   }
 
   html.dark #page-header
-    [role="group"]:has(button[role="radio"][data-radix-collection-item])
+    [role="radiogroup"]:has(button[role="radio"][data-radix-collection-item])
     button[role="radio"]:focus-visible {
     background-color: var(--sg-header-control-focus) !important;
     color: var(--sg-text) !important;
