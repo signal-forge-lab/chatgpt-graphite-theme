@@ -39,6 +39,12 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.27
+
+* Darkened the selected Configure/Create segment in GPT Editor so the active state is easier to distinguish while staying within the Soft Graphite surface hierarchy.
+* Fixed native-black Work utility and sticky-fade surfaces after ChatGPT began re-scoping `--main-surface-primary` across dark descendants.
+* Updated Chat / Work segmented-control selectors for ChatGPT's current `role="radiogroup"` structure.
+
 #### v1.0.26
 
 * Restored Soft Graphite surfaces across GPT discovery and GPT editor controls after ChatGPT introduced new surface utilities.
