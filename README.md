@@ -1,5 +1,7 @@
 # ChatGPT Graphite Themes
 
+[English](README.md) | [日本語](README.ja.md)
+
 Unofficial Stylus/UserCSS themes for ChatGPT.
 
 ![ChatGPT Soft Graphite preview](previews/chatgpt-soft-graphite-preview.webp)
@@ -26,20 +28,16 @@ stable release.
 - Preview: `previews/chatgpt-soft-graphite-preview.webp`
 - UserStyles.world note: `docs/USERSTYLES_WORLD_NOTE.md`
 
-## Development lines
-
-The `feature/standard-graphite` branch develops Standard Graphite as a
-standalone UserCSS while Soft Graphite remains the stable published style.
-
-The earlier `feature/dual-graphite-palettes` integration branch is retained but
-is currently paused.
-
 ## Branch policy
 
-- `main`: published and visually confirmed stable releases only
-- `feature/standard-graphite`: standalone Standard Graphite development
-- `feature/dual-graphite-palettes`: retained, currently paused
-- tags: immutable published versions such as `v1.0.27`
+At present, only `main` is published in this fork.
 
-Do not create a new branch for every patch version. Use commits and release
-tags to separate versions.
+- `main`: published and visually confirmed stable releases only.
+- Public feature branches: create only when the work is safe to disclose and needs review before merge; remove them after they are merged or abandoned.
+- Tags: immutable published versions such as `v1.0.27`.
+
+Do not keep stale feature branches merely as version storage. Use commits and release tags to separate published versions.
+
+## Public repository boundary
+
+Do not commit credentials, `.env` files, private keys, workstation-specific paths, local runtime state, or generated temporary output. Development-only data belongs outside the repository.
