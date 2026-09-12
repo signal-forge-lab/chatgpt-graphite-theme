@@ -3,3 +3,13 @@ node_modules/
 .agents/
 .DS_Store
 Thumbs.db
+
+# Local configuration and credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+.workbridge/
