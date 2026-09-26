@@ -39,6 +39,14 @@ Some elements may require updates after a ChatGPT interface change.
 
 ### Changelog
 
+#### v1.0.28
+
+* Updated dark-mode root detection for ChatGPT's current app shell so Soft Graphite continues to apply after the root theme structure changed.
+* Mapped the current app-shell surface, text, border, menu, tooltip, composer, sidebar, and code tokens to the Soft Graphite palette.
+* Unified Home, Project, Images, and conversation composer surfaces with the same dark code-surface treatment while preserving native rounded geometry.
+* Restyled Settings and plugin panels with the Soft Graphite panel surface and improved the selected Chat / Work segment contrast.
+* Verified the current Home, Project, conversation, Settings, plugin settings, Images, Library, Scheduled, and GPTs surfaces.
+
 #### v1.0.27
 
 * Darkened the selected Configure/Create segment in GPT Editor so the active state is easier to distinguish while staying within the Soft Graphite surface hierarchy.

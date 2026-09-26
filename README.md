@@ -19,12 +19,12 @@ root file and increment `@version` before it is pushed.
 
 ## Stable release
 
-The `main` branch preserves **ChatGPT Soft Graphite v1.0.27** as the current
+The `main` branch preserves **ChatGPT Soft Graphite v1.0.28** as the current
 stable release.
 
-- Stable CSS: `releases/v1.0.27/chatgpt-soft-graphite.user.css`
+- Stable CSS: `releases/v1.0.28/chatgpt-soft-graphite.user.css`
 - Canonical install CSS: `chatgpt-soft-graphite.user.css`
-- Stable tag: `v1.0.27`
+- Stable tag: `v1.0.28`
 - Preview: `previews/chatgpt-soft-graphite-preview.webp`
 - UserStyles.world note: `docs/USERSTYLES_WORLD_NOTE.md`
 
@@ -34,7 +34,7 @@ At present, only `main` is published in this fork.
 
 - `main`: published and visually confirmed stable releases only.
 - Public feature branches: create only when the work is safe to disclose and needs review before merge; remove them after they are merged or abandoned.
-- Tags: immutable published versions such as `v1.0.27`.
+- Tags: immutable published versions such as `v1.0.28`.
 
 Do not keep stale feature branches merely as version storage. Use commits and release tags to separate published versions.
 

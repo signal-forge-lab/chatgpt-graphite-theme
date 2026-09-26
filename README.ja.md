@@ -17,11 +17,11 @@ ChatGPT向けの非公式 Stylus / UserCSS テーマです。
 
 ## 安定版
 
-`main` は現在の安定版 **ChatGPT Soft Graphite v1.0.27** を保持します。
+`main` は現在の安定版 **ChatGPT Soft Graphite v1.0.28** を保持します。
 
-- 安定版CSS: `releases/v1.0.27/chatgpt-soft-graphite.user.css`
+- 安定版CSS: `releases/v1.0.28/chatgpt-soft-graphite.user.css`
 - インストール用CSS: `chatgpt-soft-graphite.user.css`
-- tag: `v1.0.27`
+- tag: `v1.0.28`
 - preview: `previews/chatgpt-soft-graphite-preview.webp`
 - UserStyles.world向け資料: `docs/USERSTYLES_WORLD_NOTE.md`
 
@@ -31,7 +31,7 @@ ChatGPT向けの非公式 Stylus / UserCSS テーマです。
 
 - `main`: 表示確認済みの公開安定版
 - 公開feature branch: 公開して問題のない変更をmerge前にレビューする必要がある場合だけ作成し、mergeまたは廃止後は削除
-- tag: `v1.0.27` のような変更しない公開版識別子
+- tag: `v1.0.28` のような変更しない公開版識別子
 
 過去版を保存する目的でfeature branchを残さず、commitとrelease tagを利用します。
 
